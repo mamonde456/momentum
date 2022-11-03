@@ -27,7 +27,6 @@ const Login = () => {
     state,
   };
   const params = new URLSearchParams(config).toString();
-  console.log(apiUrl, params);
   return (
     <div>
       <a href={`${apiUrl}${params}`}>click spotify</a>
