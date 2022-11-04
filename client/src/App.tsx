@@ -1,7 +1,7 @@
 import Login from "Login";
 import React from "react";
 import Spotify from "Spotify";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Router from "./Router";
 
 const GlobalStyle = createGlobalStyle`
@@ -68,12 +68,17 @@ a {
 
 const code = new URLSearchParams(window.location.search).get("code") as string;
 
+const SpotifyBtn = styled.div`
+  position: absolute;
+  top: 0;
+`;
+
 function App() {
   return (
     <>
       <GlobalStyle></GlobalStyle>
       <Router />
-      {/* {code ? <Spotify code={code} /> : <Login />} */}
+      <SpotifyBtn>{code ? <Spotify code={code} /> : <Login />}</SpotifyBtn>
     </>
   );
 }

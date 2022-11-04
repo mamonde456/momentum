@@ -10,9 +10,9 @@ interface IAPI {
 
 const ResultBox = styled.div`
   width: 500px;
-  height: 800px;
+  height: 500px;
   overflow: scroll;
-  background: blue;
+  /* background: blue; */
   /* display: grid; */
   /* grid-template-columns: repeat(5, 1fr); */
   /* gap: 10px; */
@@ -22,7 +22,7 @@ const Box = styled.div`
   /* padding: 10px; */
   width: 100%;
   height: 200px;
-  background: red;
+  /* background: red; */
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -37,7 +37,6 @@ const AlbumImg = styled.div<{ image: string }>`
 `;
 
 const SpotifyBox = ({ data }: any) => {
-  console.log(data);
   return (
     <ResultBox>
       {data.map((item: IAPI) => (
@@ -46,7 +45,7 @@ const SpotifyBox = ({ data }: any) => {
           <div>{item.title}</div>
           <div>{item.artists}</div>
           <div>{item.popularity}</div>
-          {/* <audio src={item.preview_url} controls></audio> */}
+          <audio src={item.preview_url} controls></audio>
         </Box>
       ))}
     </ResultBox>

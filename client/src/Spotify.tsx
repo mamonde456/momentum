@@ -15,6 +15,11 @@ interface IAPI {
   albumImg: string | null;
 }
 
+interface IUser {
+  display_name: string;
+  id: string;
+}
+
 const Spotify = ({ code }: IProps) => {
   const accessToken = useAuth(code);
   const spotifyApi = new SpotifyWebApi({
@@ -22,17 +27,32 @@ const Spotify = ({ code }: IProps) => {
   });
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<IAPI[] | undefined>([]);
+  const [user, setUser] = useState<IUser | null>();
 
   useEffect(() => {
     //액세스 토큰을 계속 갱신하기 때문에 갱신할 때마다 새로운 값을 넣어줌
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+    // console.log(accessToken);
+    // const userProfile = async () => {
+    //   const response = await fetch("https://api.spotify.com/v1/me/playlists", {
+    //     method: "get",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${accessToken}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   console.log(data);
+    // };
+    // userProfile();
   }, [accessToken]);
 
   useEffect(() => {
     if (!accessToken) return;
     if (!search) return setSearchResult([]);
-    let cancel = false;
+
     const result = async () => {
       // async/await으로 promise result 값 가져오기
       const data = await spotifyApi.searchTracks(search).then((res) => {
@@ -72,6 +92,7 @@ const Spotify = ({ code }: IProps) => {
         />
         <input type="submit" value="search" />
       </form>
+
       <SpotifyBox data={searchResult} />
     </div>
   );
