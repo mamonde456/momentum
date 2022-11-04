@@ -23,7 +23,7 @@ const Login = () => {
     redirect_uri: "http://localhost:3000",
     response_type: "code",
     scope:
-      "streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state",
+      "streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state playlist-read-collaborative user-read-currently-playing playlist-read-private playlist-modify-public playlist-modify-private",
     state,
   };
   const params = new URLSearchParams(config).toString();
