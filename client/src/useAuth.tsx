@@ -11,7 +11,7 @@ const useAuth = (code: string) => {
   useEffect(() => {
     //코드를 액세스 토큰으로 교환하면 state에 넣어줌.
     // async await 을 안해주면 그 동안 데이터가 없어서 에러가 발생함. axios를 사용하면 에러가 나서 fetch로 변경
-    const asdf = async () => {
+    const getAccessToken = async () => {
       const response = await fetch(process.env.REACT_APP_SERVER_API_URL, {
         method: "post",
         headers: {
@@ -22,7 +22,6 @@ const useAuth = (code: string) => {
         }),
       });
       const data = await response.json();
-      console.log(data);
       if (data.status !== 200) {
         // 에러 발생 시 home으로 return
         return window.location.assign("/");
@@ -32,7 +31,7 @@ const useAuth = (code: string) => {
       setExpiresIn(data.expiresIn);
       window.history.pushState({}, "", "/");
     };
-    asdf().catch((err) => console.log(err));
+    getAccessToken().catch((err) => console.log(err));
   }, [code]);
 
   useEffect(() => {
