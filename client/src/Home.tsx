@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import ToDo from "ToDo";
+import ToDoList from "ToDoList";
 
 const Background = styled.div<{ bg: string }>`
   width: 100vw;
@@ -223,7 +223,9 @@ const Home = () => {
             <NameInput type="text" name="focus" />
           </form>
         </MainBox>
-        <ToDo />
+        <div style={{ position: "absolute", bottom: 10, right: 10 }}>
+          <ToDoList />
+        </div>
       </Wrapper>
       {/* {bg?.slice(0, 1).map((item) => (
         <Background
