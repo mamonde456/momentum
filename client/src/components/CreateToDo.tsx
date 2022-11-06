@@ -1,6 +1,21 @@
 import { categoryState, toDoState } from "atom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import styled from "styled-components";
 import ToDo from "./ToDo";
+
+const Input = styled.input`
+  width: 100%;
+  height: 50px;
+  border: none;
+  opacity: 0.5;
+  font-size: 18px;
+  text-indent: 10px;
+  &:focus {
+    outline: none;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+  }
+`;
 
 const CreateToDo = () => {
   const setToDos = useSetRecoilState(toDoState);
@@ -19,7 +34,7 @@ const CreateToDo = () => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input type="text" name="toDo" />
+        <Input type="text" name="toDo" placeholder="New To Do" />
       </form>
     </div>
   );

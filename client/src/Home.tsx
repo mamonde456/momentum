@@ -1,7 +1,12 @@
-import axios from "axios";
+// import { backgroundImgFn } from "api";
+import Weather from "components/Weather";
 import React, { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import ToDoList from "ToDoList";
+import { backgroundImgFn } from "api";
+import { useRecoilState } from "recoil";
+import { toDoShowState } from "atom";
 
 const Background = styled.div<{ bg: string }>`
   width: 100vw;
@@ -18,8 +23,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /* position: absolute; */
+  color: white;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+  position: absolute;
 `;
 
 const MainBox = styled.div`
@@ -35,6 +41,7 @@ const MainBox = styled.div`
 const Title = styled.div`
   padding: 10px;
   font-size: 72px;
+  font-weight: 700;
 `;
 
 const NameInput = styled.input`
@@ -78,11 +85,21 @@ interface IwindowSize {
 }
 
 const Home = () => {
-  const [bg, setBg] = useState<IData[]>();
+  const [bg, setBg] = useState<IData>();
+  const [toDo, setToDo] = useRecoilState(toDoShowState);
   const [resize, setResize] = useState<IwindowSize>();
   const [time, setTime] = useState<Date | undefined>();
   const [focusShow, setFocusShow] = useState(false);
   const TitleRef = useRef<HTMLDivElement>(null);
+
+  const { isLoading, data } = useQuery(
+    ["background_image"],
+    () => backgroundImgFn("nature"),
+    {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    }
+  );
 
   const resizeFn = () => {
     const width = window.innerWidth;
@@ -106,34 +123,12 @@ const Home = () => {
     return () => window.removeEventListener("resize", resizeFn);
   }, []);
 
-  // useEffect(() => {
-  //   const config = {
-  //     client_id: "YDIkdn5nE19BVaUr1L9Cnh12iVuX0BBdA3TwzBCZT8w",
-  //     query: "nature",
-  //     count: "10",
-  //   };
-  //   const param = new URLSearchParams(config).toString();
-  //   const Fn = async () => {
-  //     const response = await fetch(
-  //       `https://api.unsplash.com/photos/random?${param}`
-  //     );
+  useEffect(() => {
+    // if(new Date().getHours() <= 0){
 
-  //     const data = await response.json();
-  //     // const result = data.map((item: IData) => {
-  //     //   return {
-  //     //     description: item.alt_description,
-  //     //     imgUrls: item.urls,
-  //     //     user: item.user.name,
-  //     //     userProfile: item.user.link.html,
-  //     //   };
-
-  //     // });
-  //     setBg(data);
-  //   };
-  //   Fn();
-  //   if (!bg) return;
-  //   console.log(bg[0]);
-  // }, [new Date().getDate()]);
+    // }
+    setBg(data[Math.floor(Math.random() * 10)]);
+  }, []);
 
   const onSubmit = (
     e: React.FormEvent<HTMLFormElement | any>,
@@ -158,12 +153,13 @@ const Home = () => {
   return (
     <>
       <Wrapper>
+        <Weather />
         <MainBox>
           {time && (
             <p
               style={
                 window.localStorage.getItem("name")
-                  ? { fontSize: 120 }
+                  ? { fontSize: 120, fontWeight: 700 }
                   : { display: "none" }
               }
             >
@@ -224,15 +220,26 @@ const Home = () => {
           </form>
         </MainBox>
         <div style={{ position: "absolute", bottom: 10, right: 10 }}>
-          <ToDoList />
+          <p
+            onClick={() => setToDo((prev) => !prev)}
+            style={
+              toDo
+                ? { display: "none" }
+                : { fontSize: 24, fontWeight: 700, display: "block" }
+            }
+          >
+            To Do
+          </p>
+          <div style={toDo ? { display: "block" } : { display: "none" }}>
+            <ToDoList />
+          </div>
         </div>
       </Wrapper>
-      {/* {bg?.slice(0, 1).map((item) => (
-        <Background
-          style={{ width: resize?.width, height: resize?.height }}
-          bg={item.urls.full}
-        ></Background>
-      ))} */}
+
+      <Background
+        style={{ width: resize?.width, height: resize?.height }}
+        bg={bg?.urls.regular || ""}
+      ></Background>
     </>
     // <Wrapper bg={bg[0].urls?.regular || ""}>
     //   <div>{bg.map((item) => item)}</div>

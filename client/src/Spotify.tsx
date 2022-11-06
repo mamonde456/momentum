@@ -1,7 +1,7 @@
 import useAuth from "useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import React, { useEffect, useState } from "react";
-import SpotifyBox from "SpotifyBox";
+import SpotifyBox from "components/SpotifyBox";
 
 interface IProps {
   code: string;

@@ -1,5 +1,18 @@
 import { Categories, categoryState, IToDo, toDoState } from "atom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import styled from "styled-components";
+
+const ToDoBox = styled.div`
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const BtnBox = styled.div``;
+const Text = styled.div`
+  width: 230px;
+  word-break: break-all;
+`;
 
 const ToDo = ({ text, id, category }: IToDo) => {
   const setToDo = useSetRecoilState(toDoState);
@@ -22,55 +35,50 @@ const ToDo = ({ text, id, category }: IToDo) => {
   };
 
   return (
-    <>
-      <div>
-        {category === Categories.TO_DO ? (
-          <>
-            <p>{text}</p>
-            <>
-              {category === Categories.TO_DO && (
-                <>
-                  <button
-                    name={Categories.DONE + ""}
-                    onClick={() => onClick(Categories.DONE)}
-                  >
-                    Done
-                  </button>
-                  <button
-                    name={Categories.DELETE + ""}
-                    onClick={() => onClick(Categories.DELETE)}
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
-            </>
-          </>
-        ) : (
-          <>
-            <p style={{ textDecoration: "line-through" }}>{text}</p>
-            <>
-              {selectorCategory === Categories.DONE && (
-                <>
-                  <button
-                    name={Categories.TO_DO + ""}
-                    onClick={() => onClick(Categories.TO_DO)}
-                  >
-                    To Do
-                  </button>
-                </>
-              )}
+    <ToDoBox>
+      {category === Categories.TO_DO ? (
+        <>
+          <Text>{text}</Text>
+
+          {category === Categories.TO_DO && (
+            <BtnBox>
+              <button
+                name={Categories.DONE + ""}
+                onClick={() => onClick(Categories.DONE)}
+              >
+                Done
+              </button>
               <button
                 name={Categories.DELETE + ""}
                 onClick={() => onClick(Categories.DELETE)}
               >
                 Delete
               </button>
-            </>
-          </>
-        )}
-      </div>
-    </>
+            </BtnBox>
+          )}
+        </>
+      ) : (
+        <>
+          <Text style={{ textDecoration: "line-through" }}>{text}</Text>
+          <BtnBox>
+            {selectorCategory === Categories.DONE && (
+              <button
+                name={Categories.TO_DO + ""}
+                onClick={() => onClick(Categories.TO_DO)}
+              >
+                To Do
+              </button>
+            )}
+            <button
+              name={Categories.DELETE + ""}
+              onClick={() => onClick(Categories.DELETE)}
+            >
+              Delete
+            </button>
+          </BtnBox>
+        </>
+      )}
+    </ToDoBox>
   );
 };
 

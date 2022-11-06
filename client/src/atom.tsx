@@ -38,3 +38,8 @@ export const setToDos = selector({
       return toDos.filter((toDo) => toDo.category === Categories.DONE);
   },
 });
+
+export const toDoShowState = atom({
+  key: "istoDoShow",
+  default: false,
+});
