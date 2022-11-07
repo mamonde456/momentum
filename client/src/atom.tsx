@@ -39,7 +39,23 @@ export const setToDos = selector({
   },
 });
 
-export const toDoShowState = atom({
-  key: "istoDoShow",
-  default: false,
+export interface ITrack {
+  title: string;
+  artists: string;
+  preview_url: string;
+  popularity: number;
+  albumImg: string;
+  uri: string;
+}
+
+export const trackState = atom<ITrack>({
+  key: "track",
+  default: {
+    title: "",
+    artists: "",
+    preview_url: "",
+    popularity: 0,
+    albumImg: "",
+    uri: "",
+  },
 });

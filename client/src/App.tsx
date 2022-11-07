@@ -1,6 +1,6 @@
-import Login from "Login";
+import Login from "components/Login";
 import React from "react";
-import Spotify from "Spotify";
+import Spotify from "components/Spotify";
 import styled, { createGlobalStyle } from "styled-components";
 import Router from "./Router";
 

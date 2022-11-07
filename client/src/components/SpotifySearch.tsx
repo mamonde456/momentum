@@ -1,12 +1,6 @@
+import { ITrack, trackState } from "atom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-
-interface IAPI {
-  title: string;
-  artists: string;
-  preview_url: string;
-  popularity: number;
-  albumImg: string;
-}
 
 const ResultBox = styled.div`
   width: 500px;
@@ -36,20 +30,23 @@ const AlbumImg = styled.div<{ image: string }>`
   background-position: center;
 `;
 
-const SpotifyBox = ({ data }: any) => {
+const SpotifySearch = ({ data }: any) => {
+  const [track, setTrack] = useRecoilState(trackState);
+  // const setTrack = useSetRecoilState(trackState);
+  // console.log(track);
   return (
     <ResultBox>
-      {data.map((item: IAPI) => (
-        <Box key={item.title}>
+      {data.map((item: ITrack) => (
+        <Box onClick={() => setTrack(item)} key={item.uri}>
           <AlbumImg image={item.albumImg} />
           <div>{item.title}</div>
           <div>{item.artists}</div>
           <div>{item.popularity}</div>
-          <audio src={item.preview_url} controls></audio>
+          {/* <audio src={item.preview_url} controls></audio> */}
         </Box>
       ))}
     </ResultBox>
   );
 };
 
-export default SpotifyBox;
+export default SpotifySearch;

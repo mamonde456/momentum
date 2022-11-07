@@ -1,7 +1,25 @@
 import useAuth from "useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import React, { useEffect, useState } from "react";
-import SpotifyBox from "components/SpotifyBox";
+import Player from "./Player";
+import { useRecoilValue } from "recoil";
+import { trackState } from "atom";
+import SpotifySearch from "components/SpotifySearch";
+import styled from "styled-components";
+
+const PlayList = styled.div``;
+
+const Img = styled.div<{ bgPhoto: string }>`
+  width: 100px;
+  height: 100px;
+  background-image: url(${(props) => props.bgPhoto});
+  background-size: cover;
+  background-position: center;
+`;
+
+const Title = styled.p``;
+
+const Description = styled.p``;
 
 interface IProps {
   code: string;
@@ -13,11 +31,21 @@ interface IAPI {
   preview_url: string | null;
   popularity: number | null;
   albumImg: string | null;
+  uri: string;
 }
 
-interface IUser {
-  display_name: string;
-  id: string;
+interface IPlay {
+  items: [
+    {
+      description: string;
+      name: string;
+      images: [{ height: number; url: string; width: number }];
+      uri: string;
+      tracks: {
+        href: string;
+      };
+    }
+  ];
 }
 
 const Spotify = ({ code }: IProps) => {
@@ -27,26 +55,27 @@ const Spotify = ({ code }: IProps) => {
   });
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<IAPI[] | undefined>([]);
-  const [user, setUser] = useState<IUser | null>();
+  const [playList, setPlayList] = useState<IPlay | null>();
+  const track = useRecoilValue(trackState);
 
   useEffect(() => {
     //액세스 토큰을 계속 갱신하기 때문에 갱신할 때마다 새로운 값을 넣어줌
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
     // console.log(accessToken);
-    // const userProfile = async () => {
-    //   const response = await fetch("https://api.spotify.com/v1/me/playlists", {
-    //     method: "get",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${accessToken}`,
-    //     },
-    //   });
-    //   const data = await response.json();
-    //   console.log(data);
-    // };
-    // userProfile();
+    const userProfile = async () => {
+      const response = await fetch("https://api.spotify.com/v1/me/playlists", {
+        method: "get",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const data = await response.json();
+      setPlayList(data);
+    };
+    userProfile();
   }, [accessToken]);
 
   useEffect(() => {
@@ -58,8 +87,6 @@ const Spotify = ({ code }: IProps) => {
       const data = await spotifyApi.searchTracks(search).then((res) => {
         // data 변수 안에서 결과값 리턴
         return res.body?.tracks?.items?.map((item) => {
-          console.log(item);
-
           // map 함수 내에서 return
           return {
             title: item.name,
@@ -67,12 +94,14 @@ const Spotify = ({ code }: IProps) => {
             preview_url: item.preview_url,
             popularity: item.popularity,
             albumImg: item.album.images[0].url,
+            uri: item.uri,
           };
         });
       });
       // map 함수로 arr 한 번 풀어주기...
       setSearchResult(() => data?.map((data) => data));
     };
+
     result();
   }, [search, accessToken]);
 
@@ -82,7 +111,7 @@ const Spotify = ({ code }: IProps) => {
   };
   return (
     <div>
-      <form onSubmit={(e) => onSubmit(e)}>
+      {/* <form onSubmit={(e) => onSubmit(e)}>
         <input
           type="search"
           name="search"
@@ -91,9 +120,24 @@ const Spotify = ({ code }: IProps) => {
           placeholder="search song"
         />
         <input type="submit" value="search" />
-      </form>
+      </form> */}
 
-      <SpotifyBox data={searchResult} />
+      {/* <SpotifySearch data={searchResult} /> */}
+      <PlayList>
+        {playList?.items.map((item) => (
+          <>
+            <Img bgPhoto={item.images[0].url}></Img>
+            <Title>{item.name}</Title>
+            <Description>{item.description}</Description>
+          </>
+        ))}
+      </PlayList>
+      {/* <p>{playList?.items[0].name} play list</p> */}
+      {/* <p>{playList?.items[0].description}</p> */}
+      <Player
+        accessToken={accessToken}
+        track={track.uri || playList?.items[0].uri}
+      />
     </div>
   );
 };
