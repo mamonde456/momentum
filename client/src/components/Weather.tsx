@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 20px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   align-items: end;
