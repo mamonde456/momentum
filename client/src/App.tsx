@@ -70,7 +70,8 @@ const code = new URLSearchParams(window.location.search).get("code") as string;
 
 const SpotifyBtn = styled.div`
   position: absolute;
-  top: 0;
+  top: 20px;
+  left: 20px;
 `;
 
 function App() {
