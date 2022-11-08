@@ -62,7 +62,7 @@ const useAuth = (code: string) => {
       //만료 시간 > 3600
     }, (expiresIn - 60) * 1000);
     // 인터벌 삭제
-    return () => clearTimeout(interval);
+    return () => clearInterval(interval);
   }, [refreshToken, expiresIn]);
 
   return accessToken;

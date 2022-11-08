@@ -2,12 +2,43 @@ import useAuth from "useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import React, { useEffect, useState } from "react";
 import Player from "./Player";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { trackState } from "atom";
 import SpotifySearch from "components/SpotifySearch";
 import styled from "styled-components";
 
-const PlayList = styled.div``;
+const Wrapper = styled.div``;
+
+const Title = styled.p`
+  font-size: 22px;
+  color: white;
+  margin-bottom: 30px;
+`;
+
+const PlayBox = styled.div`
+  width: 400px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  border: solid 1px white;
+`;
+
+const TabBtn = styled.div`
+  width: 100%;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+`;
+
+const PlayList = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  overflow: scroll;
+`;
 
 const Img = styled.div<{ bgPhoto: string }>`
   width: 100px;
@@ -17,9 +48,36 @@ const Img = styled.div<{ bgPhoto: string }>`
   background-position: center;
 `;
 
-const Title = styled.p``;
+const p = styled.p``;
 
 const Description = styled.p``;
+
+const Search = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const SearchInput = styled.input`
+  width: 280px;
+  background: none;
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  margin-right: 10px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SearchBtn = styled.input`
+  padding: 10px;
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+`;
 
 interface IProps {
   code: string;
@@ -55,8 +113,10 @@ const Spotify = ({ code }: IProps) => {
   });
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<IAPI[] | undefined>([]);
-  const [playList, setPlayList] = useState<IPlay | null>();
-  const track = useRecoilValue(trackState);
+  const [playListResult, setPlayListResult] = useState<IPlay | null>();
+  const [isClick, setIsClick] = useState(false);
+  const [tab, setTab] = useState(false);
+  const [track, setTrack] = useRecoilState(trackState);
 
   useEffect(() => {
     //액세스 토큰을 계속 갱신하기 때문에 갱신할 때마다 새로운 값을 넣어줌
@@ -73,7 +133,7 @@ const Spotify = ({ code }: IProps) => {
         },
       });
       const data = await response.json();
-      setPlayList(data);
+      setPlayListResult(data);
     };
     userProfile();
   }, [accessToken]);
@@ -99,7 +159,7 @@ const Spotify = ({ code }: IProps) => {
         });
       });
       // map 함수로 arr 한 번 풀어주기...
-      setSearchResult(() => data?.map((data) => data));
+      setSearchResult(data);
     };
 
     result();
@@ -107,38 +167,56 @@ const Spotify = ({ code }: IProps) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearch(e.currentTarget.search.value);
+    const result = e.currentTarget.search.value;
+    if (!result) return;
+    setSearch(result);
+    e.currentTarget.reset();
   };
   return (
-    <div>
-      {/* <form onSubmit={(e) => onSubmit(e)}>
-        <input
-          type="search"
-          name="search"
-          // value={search}
-          // onChange={(e) => setSearch(e.target.value)}
-          placeholder="search song"
-        />
-        <input type="submit" value="search" />
-      </form> */}
+    <Wrapper>
+      <Title onClick={() => setIsClick((prev) => !prev)}>My playlist</Title>
+      <PlayBox style={isClick ? { display: "block" } : { display: "none" }}>
+        <div style={{ display: "flex", gap: 10, marginBottom: 30 }}>
+          <TabBtn onClick={() => setTab(false)}>Playlist</TabBtn>
+          <TabBtn onClick={() => setTab(true)}>search</TabBtn>
+        </div>
+        {tab ? (
+          <div>
+            <Search>
+              <form onSubmit={(e) => onSubmit(e)}>
+                <SearchInput
+                  type="search"
+                  name="search"
+                  // value={search}
+                  // onChange={(e) => setSearch(e.target.value)}
+                  placeholder="search song"
+                />
+                <SearchBtn type="submit" value="search" />
+              </form>
+            </Search>
+            <SpotifySearch data={searchResult} />
+          </div>
+        ) : (
+          <PlayList>
+            {playListResult?.items.map((item) => (
+              <div
+                onClick={() => setTrack({ uri: item.uri })}
+                style={{ cursor: "pointer" }}
+              >
+                <Img
+                  key={item.images[0].url}
+                  bgPhoto={item.images[0].url}
+                ></Img>
+                <p key={item.name}>{item.name}</p>
+                <p key={item.description}>{item.description}</p>
+              </div>
+            ))}
+          </PlayList>
+        )}
 
-      {/* <SpotifySearch data={searchResult} /> */}
-      <PlayList>
-        {playList?.items.map((item) => (
-          <>
-            <Img bgPhoto={item.images[0].url}></Img>
-            <Title>{item.name}</Title>
-            <Description>{item.description}</Description>
-          </>
-        ))}
-      </PlayList>
-      {/* <p>{playList?.items[0].name} play list</p> */}
-      {/* <p>{playList?.items[0].description}</p> */}
-      <Player
-        accessToken={accessToken}
-        track={track.uri || playList?.items[0].uri}
-      />
-    </div>
+        <Player accessToken={accessToken} track={track.uri} />
+      </PlayBox>
+    </Wrapper>
   );
 };
 

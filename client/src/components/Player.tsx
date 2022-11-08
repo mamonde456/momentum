@@ -11,11 +11,11 @@ const Player = ({ accessToken, track }: any) => {
     <SpotifyWebPlayer
       token={accessToken}
       showSaveIcon
-      // callback={(state) => {
-      //   if (!state.isPlaying) setPlay(false);
-      // }}
-      uris={track}
-      // play={true}
+      play={play}
+      callback={(state) => {
+        if (!state.isPlaying) setPlay(false);
+      }}
+      uris={track ? [track] : []}
     />
   );
 };

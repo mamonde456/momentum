@@ -15,6 +15,7 @@ export interface IToDo {
   text: string;
   id: number;
   category: Categories;
+  state?: string;
 }
 
 export const toDoState = atom<IToDo[]>({
@@ -33,29 +34,22 @@ export const setToDos = selector({
   get: ({ get }) => {
     const toDos = get(toDoState);
     const category = get(categoryState);
-    if (category === Categories.TO_DO) return toDos.filter((toDo) => toDo);
+    if (category === Categories.TO_DO) return toDos;
     if (category === Categories.DONE)
       return toDos.filter((toDo) => toDo.category === Categories.DONE);
   },
 });
 
 export interface ITrack {
-  title: string;
-  artists: string;
-  preview_url: string;
-  popularity: number;
-  albumImg: string;
+  title?: string;
+  artists?: string;
+  preview_url?: string;
+  popularity?: number;
+  albumImg?: string;
   uri: string;
 }
 
 export const trackState = atom<ITrack>({
   key: "track",
-  default: {
-    title: "",
-    artists: "",
-    preview_url: "",
-    popularity: 0,
-    albumImg: "",
-    uri: "",
-  },
+  default: { uri: "" },
 });
