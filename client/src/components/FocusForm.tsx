@@ -25,7 +25,6 @@ const FocusTextBox = styled.div`
 
 const FocusText = styled.p`
   padding: 10px;
-  /* font-weight: 700; */
   font-size: 42px;
 `;
 const Icon = styled.svg`

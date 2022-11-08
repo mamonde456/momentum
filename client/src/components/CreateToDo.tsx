@@ -7,9 +7,11 @@ const Input = styled.input`
   width: 100%;
   height: 50px;
   border: none;
-  opacity: 0.5;
   font-size: 18px;
   text-indent: 10px;
+  &::placeholder {
+    opacity: 0.5;
+  }
   &:focus {
     outline: none;
     border-bottom: solid 1px rgba(0, 0, 0, 0.5);
