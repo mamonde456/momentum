@@ -29,6 +29,7 @@ const SettingList = styled.div`
   border-radius: 10px;
   color: black;
 `;
+
 const Arrow = styled.div`
   width: 0;
   height: 0;
@@ -41,6 +42,11 @@ const Arrow = styled.div`
   left: 30px;
 `;
 
+const Title = styled.p`
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 30px;
+`;
 const BgList = styled.ul`
   margin: 0 auto;
   display: grid;
@@ -48,12 +54,16 @@ const BgList = styled.ul`
   gap: 10px;
 `;
 const Bg = styled.li`
+  cursor: pointer;
   padding: 10px;
   border-radius: 10px;
   text-align: center;
   border: solid 2px rgba(0, 0, 0, 0.3);
   background-color: rgba(155, 202, 188, 0.3);
 `;
+
+const Toggles = styled.div``;
+const Toggle = styled.div``;
 
 const Setting = () => {
   const [bgPhoto, setBgPhoto] = useState<string | undefined>("");
@@ -63,9 +73,23 @@ const Setting = () => {
   useEffect(() => {
     if (count < 3) {
       window.localStorage.setItem("bgPhoto", String(bgPhoto));
-      setCount(count + 1);
     }
   }, [bgPhoto]);
+
+  useEffect(() => {
+    if (count > 3) return;
+    const hours = setTimeout(() => {
+      setCount(0);
+    }, 1000 * 60 * 60);
+
+    return () => clearTimeout(hours);
+  }, []);
+
+  const clickCnt = (text: string) => {
+    setBgPhoto(text);
+    setCount(count + 1);
+    console.log(count);
+  };
   return (
     <Wrapper>
       <Settingicon
@@ -77,30 +101,42 @@ const Setting = () => {
       </Settingicon>
       {click && (
         <SettingList>
-          <p style={{ fontSize: 36, fontWeight: 500, marginBottom: 30 }}>
-            Photos
-          </p>
-          {count === 2 && (
-            <p>
+          <Title>Photos</Title>
+          {count >= 2 && (
+            <p
+              style={{
+                opacity: 0.5,
+                fontSize: 14,
+                marginBottom: 20,
+                color: "red",
+              }}
+            >
               Image can no longer be loaded! Please request again in an hour!
             </p>
           )}
           <BgList>
-            <Bg onClick={() => setBgPhoto("nature")}>Nature</Bg>
-            <Bg onClick={() => setBgPhoto("architecture-interiors")}>
+            <Bg onClick={() => clickCnt("nature")}>Nature</Bg>
+            <Bg onClick={() => clickCnt("architecture-interiors")}>
               Architecture & Interiors
             </Bg>
-            <Bg onClick={() => setBgPhoto("fashion-beauty")}>
-              Fashion & Beauty
-            </Bg>
-            <Bg onClick={() => setBgPhoto("food-drink")}>Food & Drink</Bg>
-            <Bg onClick={() => setBgPhoto("film")}>Film</Bg>
-            <Bg onClick={() => setBgPhoto("people")}>People</Bg>
-            <Bg onClick={() => setBgPhoto("athletics")}>Athletics</Bg>
-            <Bg onClick={() => setBgPhoto("street-photograhy")}>
+            <Bg onClick={() => clickCnt("fashion-beauty")}>Fashion & Beauty</Bg>
+            <Bg onClick={() => clickCnt("food-drink")}>Food & Drink</Bg>
+            <Bg onClick={() => clickCnt("film")}>Film</Bg>
+            <Bg onClick={() => clickCnt("people")}>People</Bg>
+            <Bg onClick={() => clickCnt("athletics")}>Athletics</Bg>
+            <Bg onClick={() => clickCnt("street-photograhy")}>
               Street Photograhy
             </Bg>
           </BgList>
+          <Title>Toggle</Title>
+          <Toggles>
+            <Toggle>spotify</Toggle>
+            <Toggle>todo</Toggle>
+            <Toggle>weather</Toggle>
+            <Toggle>focus</Toggle>
+            <Toggle>timer</Toggle>
+            <Toggle>quotes</Toggle>
+          </Toggles>
           <Arrow />
         </SettingList>
       )}
