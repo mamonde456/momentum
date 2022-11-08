@@ -27,8 +27,9 @@ const MainBox = styled.div`
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  position: relative;
+  top: 50px;
   /* gap: 30px; */
   /* color: white; */
 `;
@@ -41,6 +42,8 @@ const Title = styled.div`
 const Quote = styled.div`
   position: absolute;
   bottom: 30px;
+  font-size: 22px;
+  opacity: 0.5;
 `;
 
 interface IData {
@@ -120,10 +123,9 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (data) {
-      setBg(data[Math.floor(Math.random() * 10)]);
-    }
-  }, []);
+    if (isLoading) return;
+    setBg(data[Math.floor(Math.random() * 10)]);
+  }, [data]);
 
   return (
     <Wrapper bgPhoto={bg?.urls.regular || ""}>
@@ -133,7 +135,7 @@ const Home = () => {
           <p
             style={
               window.localStorage.getItem("name")
-                ? { fontSize: 150, fontWeight: 700 }
+                ? { fontSize: 180 }
                 : { display: "none" }
             }
           >
@@ -157,11 +159,11 @@ const Home = () => {
           <NameForm width={titleRef?.current?.offsetWidth} />
         )}
         {window.localStorage.getItem("name") && <FocusForm />}
-        <Quote>{quotes?.slip?.advice}</Quote>
       </MainBox>
 
       <ToDoList />
       <Setting></Setting>
+      <Quote>{quotes?.slip?.advice}</Quote>
     </Wrapper>
   );
 };
