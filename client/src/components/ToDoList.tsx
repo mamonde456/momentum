@@ -2,7 +2,7 @@ import { Categories, categoryState, setToDos, toDoState } from "atom";
 import CreateToDo from "components/CreateToDo";
 import ToDo from "components/ToDo";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 const ToDoBox = styled.div`
@@ -22,6 +22,7 @@ const ClickToDo = styled.p`
   right: 0;
   color: white;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 const ToDoListBox = styled.div`
@@ -100,9 +101,9 @@ const Arrow = styled.div`
 
 const ToDoList = () => {
   const toDos = useRecoilValue(setToDos);
+  const [isShow, setIsShow] = useState(false);
   const [click, setClick] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [isShow, setIsShow] = useState(false);
   // console.log(toDos);
   const [toDoList, setToDoList] = useRecoilState(toDoState);
   const [category, setCategory] = useRecoilState(categoryState);
@@ -130,7 +131,15 @@ const ToDoList = () => {
   };
   return (
     <ToDoBox>
-      <ClickToDo onClick={() => setIsShow((prev) => !prev)}>Todo</ClickToDo>
+      <ClickToDo
+        onClick={() => {
+          setIsShow((prev) => !prev);
+          setClick(false);
+          setMenu(false);
+        }}
+      >
+        Todo
+      </ClickToDo>
       {isShow && (
         <ToDoListBox>
           <div>

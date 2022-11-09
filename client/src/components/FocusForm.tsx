@@ -33,8 +33,34 @@ const Icon = styled.svg`
   fill: white;
 `;
 
+const OptionBox = styled.div`
+  position: relative;
+`;
+const Option = styled.ul`
+  width: 150px;
+  height: 40px;
+  background-color: white;
+  border-radius: 10px;
+  position: absolute;
+  right: -150px;
+  top: 0;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  li {
+    width: 100%;
+    padding: 10px;
+    &:hover {
+      background-color: #eeee;
+    }
+  }
+`;
+
 const FocusForm = () => {
   const [focusCheck, setFocusCheck] = useState(false);
+  const [click, setClick] = useState(false);
   const onSubmit = (e: React.FormEvent<HTMLFormElement | any>) => {
     //??
     e.preventDefault();
@@ -77,6 +103,26 @@ const FocusForm = () => {
           >
             {window.localStorage.getItem("focus")}
           </FocusText>
+          <OptionBox>
+            <Icon
+              onClick={() => setClick((prev) => !prev)}
+              style={{ width: 25, height: 25 }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 128 512"
+            >
+              <path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z" />
+            </Icon>
+            <Option style={click ? { display: "block" } : { display: "none" }}>
+              <li
+                onClick={() => {
+                  window.localStorage.removeItem("focus");
+                  setClick(false);
+                }}
+              >
+                Delete
+              </li>
+            </Option>
+          </OptionBox>
         </FocusTextBox>
       )}
       {!window.localStorage.getItem("focus") && (
