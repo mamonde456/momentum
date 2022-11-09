@@ -5,6 +5,10 @@
 
 ## 추가 기능
 
-spotify api 사용
-unsplash api 사용
-...
+spotify 로그인으로 음악 재생
+<br>
+unsplash api로 백그라운드 이미지 사용
+<br>
+adviceslip api의 명언 사용
+<br>
+openweather api로 현재 위치의 날씨 가져오기
