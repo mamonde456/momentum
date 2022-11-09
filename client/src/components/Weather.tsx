@@ -10,11 +10,15 @@ const Wrapper = styled.div`
   align-items: end;
 `;
 const WeatherBox = styled.div`
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
 `;
 
 const Temp = styled.p`
+  padding: 10px;
+  color: #303030;
   font-size: 24px;
   font-weight: 700;
 `;
@@ -22,6 +26,7 @@ const Temp = styled.p`
 const Icon = styled.div<{ bgIcon: string }>`
   width: 50px;
   height: 50px;
+
   background-image: url(${(props) => props.bgIcon});
   background-size: cover;
   background-position: center;
@@ -74,7 +79,9 @@ const Weather = () => {
           {/* <p>{weather?.weather.map((item) => item.description)}</p> */}
           <Temp>{weather?.main.temp} ℃</Temp>
         </WeatherBox>
-        <p style={{ opacity: 0.8 }}>{weather?.name}</p>
+        <p style={{ opacity: 0.8, color: "white", padding: 10 }}>
+          {weather?.name}
+        </p>
       </Wrapper>
     </>
   );
