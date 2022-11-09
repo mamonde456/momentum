@@ -66,20 +66,11 @@ a {
 }
 `;
 
-const code = new URLSearchParams(window.location.search).get("code") as string;
-
-const SpotifyBtn = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-`;
-
 function App() {
   return (
     <>
       <GlobalStyle></GlobalStyle>
       <Router />
-      <SpotifyBtn>{code ? <Spotify code={code} /> : <Login />}</SpotifyBtn>
     </>
   );
 }

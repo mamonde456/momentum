@@ -1,14 +1,14 @@
-// import { backgroundImgFn } from "api";
 import Weather from "components/Weather";
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import ToDoList from "components/ToDoList";
 import { backgroundImgFn, quotesFn } from "api";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import NameForm from "components/NameForm";
 import FocusForm from "components/FocusForm";
 import Setting from "components/Setthing";
+import Spotify from "components/Spotify";
+import Login from "components/Login";
 
 const Wrapper = styled.div<{ bgPhoto: string }>`
   width: 100vw;
@@ -17,7 +17,6 @@ const Wrapper = styled.div<{ bgPhoto: string }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center;
@@ -30,8 +29,7 @@ const MainBox = styled.div`
   align-items: center;
   position: relative;
   top: 50px;
-  /* gap: 30px; */
-  /* color: white; */
+  color: white;
 `;
 
 const Title = styled.div`
@@ -43,7 +41,9 @@ const Quote = styled.div`
   position: absolute;
   bottom: 30px;
   font-size: 22px;
-  opacity: 0.5;
+  font-weight: 700;
+  color: white;
+  /* opacity: 0.5; */
 `;
 
 interface IData {
@@ -76,10 +76,18 @@ interface IQuotes {
   };
 }
 
+const code = new URLSearchParams(window.location.search).get("code") as string;
+
+const SpotifyBtn = styled.div`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+`;
 const Home = () => {
   const [bg, setBg] = useState<IData>();
   const [resize, setResize] = useState<IwindowSize>();
   const [time, setTime] = useState<Date | undefined>();
+  const [hello, setHello] = useState<string>("");
   const titleRef = useRef<HTMLDivElement>(null);
   const bgValue = window.localStorage.getItem("bgPhoto");
 
@@ -111,6 +119,16 @@ const Home = () => {
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
+
+    const hour = String(time).slice(16, 18);
+    if (Number(hour) < 12) {
+      setHello("Good morning");
+    } else if (Number(hour) >= 15) {
+      setHello("Good evening");
+    } else if (Number(hour) >= 12) {
+      setHello("Good afternoon");
+    }
+
     return () => {
       clearInterval(timer);
     };
@@ -129,18 +147,27 @@ const Home = () => {
 
   return (
     <Wrapper bgPhoto={bg?.urls.regular || ""}>
-      <Weather />
+      {JSON.parse(window.localStorage.getItem("Weather") || "true") && (
+        <Weather />
+      )}
+      {JSON.parse(window.localStorage.getItem("Spotify") || "true") && (
+        <SpotifyBtn>{code ? <Spotify code={code} /> : <Login />}</SpotifyBtn>
+      )}
       <MainBox>
-        {time && (
-          <p
-            style={
-              window.localStorage.getItem("name")
-                ? { fontSize: 180 }
-                : { display: "none" }
-            }
-          >
-            {String(time).slice(16, 24)}
-          </p>
+        {JSON.parse(window.localStorage.getItem("Clock") || "true") && (
+          <>
+            {time && (
+              <p
+                style={
+                  window.localStorage.getItem("name")
+                    ? { fontSize: 180 }
+                    : { display: "none" }
+                }
+              >
+                {String(time).slice(16, 21)}
+              </p>
+            )}
+          </>
         )}
         <Title
           style={
@@ -151,19 +178,24 @@ const Home = () => {
           ref={titleRef}
         >
           {window.localStorage.getItem("name")
-            ? `Hello, ${window.localStorage.getItem("name")}`
+            ? `${hello}, ${window.localStorage.getItem("name")}`
             : "Hello, what's your name?"}
         </Title>
 
         {!window.localStorage.getItem("name") && (
           <NameForm width={titleRef?.current?.offsetWidth} />
         )}
-        {window.localStorage.getItem("name") && <FocusForm />}
+        {JSON.parse(window.localStorage.getItem("Focus") || "true") && (
+          <>{window.localStorage.getItem("name") && <FocusForm />}</>
+        )}
       </MainBox>
-
-      <ToDoList />
+      {JSON.parse(window.localStorage.getItem("Todo") || "true") && (
+        <ToDoList />
+      )}
       <Setting></Setting>
-      <Quote>{quotes?.slip?.advice}</Quote>
+      {JSON.parse(window.localStorage.getItem("Quotes") || "true") && (
+        <Quote>{quotes?.slip?.advice}</Quote>
+      )}
     </Wrapper>
   );
 };
