@@ -22,9 +22,10 @@ const NameForm = ({ width }: any) => {
     //??
     e.preventDefault();
     const {
-      currentTarget: { name: value },
+      currentTarget: {
+        name: { value },
+      },
     } = e;
-
     window.localStorage.setItem("name", value);
     return e.currentTarget.reset();
   };
@@ -40,7 +41,7 @@ const NameForm = ({ width }: any) => {
       >
         <Input
           style={
-            window.localStorage.getItem("name") ? { width } : { width: 800 }
+            window.localStorage.getItem("name") ? { width: 800 } : { width }
           }
           type="text"
           name="name"
