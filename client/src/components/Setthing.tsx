@@ -1,95 +1,86 @@
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import General from "./General";
+import Photos from "./Photos";
+import ToggleItem from "./ToggleItem";
 
 const Wrapper = styled.div`
   position: absolute;
   bottom: 20px;
-  left: 20px;
+  left: 10px;
 `;
 
 const Settingicon = styled.svg`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   position: absolute;
-  bottom: 0;
-  left: 30px;
+  bottom: 10px;
+  left: 15px;
   fill: white;
   opacity: 0.8;
 `;
 
 const SettingList = styled.div`
-  width: 500px;
+  width: 700px;
   height: 600px;
-  padding: 10px 50px;
+
   position: absolute;
   bottom: 70px;
   left: 0;
   background-color: white;
   border-radius: 10px;
   color: black;
+  display: flex;
+  align-items: center;
+`;
+
+const GenerList = styled.div`
+  width: 200px;
+  height: 100%;
+  border-right: solid 1px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 10px;
+`;
+
+const Gener = styled.div`
+  font-size: 24px;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 20px 30px;
 `;
 
 const Arrow = styled.div`
   width: 0;
   height: 0;
-  border-left: 15px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid white;
-  border-right: 15px solid transparent;
+  border-left: 8px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid white;
+  border-right: 8px solid transparent;
   position: absolute;
-  bottom: -40px;
-  left: 30px;
+  bottom: -20px;
+  left: 20px;
 `;
 
-const Title = styled.p`
-  font-size: 36px;
-  font-weight: 500;
-  margin-bottom: 30px;
-`;
-const BgList = styled.ul`
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-`;
-const Bg = styled.li`
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  border: solid 2px rgba(0, 0, 0, 0.3);
-  background-color: rgba(155, 202, 188, 0.3);
-`;
-
-const Toggles = styled.div``;
-const Toggle = styled.div``;
+interface IGener {
+  id: number;
+  title: string;
+  body: JSX.Element;
+}
 
 const Setting = () => {
-  const [bgPhoto, setBgPhoto] = useState<string | undefined>("");
-  const [count, setCount] = useState(0);
+  const generObj = [
+    { id: 0, title: "General", body: <General /> },
+    { id: 1, title: "Photos", body: <Photos /> },
+  ];
   const [click, setClick] = useState(false);
-
-  useEffect(() => {
-    if (count < 3) {
-      window.localStorage.setItem("bgPhoto", String(bgPhoto));
-    }
-  }, [bgPhoto]);
-
-  useEffect(() => {
-    if (count > 3) return;
-    const hours = setTimeout(() => {
-      setCount(0);
-    }, 1000 * 60 * 60);
-
-    return () => clearTimeout(hours);
-  }, []);
-
-  const clickCnt = (text: string) => {
-    setBgPhoto(text);
-    setCount(count + 1);
-    console.log(count);
-  };
+  const [gener, setGener] = useState<IGener>(generObj[0]);
   return (
     <Wrapper>
       <Settingicon
@@ -101,42 +92,22 @@ const Setting = () => {
       </Settingicon>
       {click && (
         <SettingList>
-          <Title>Photos</Title>
-          {count >= 2 && (
-            <p
-              style={{
-                opacity: 0.5,
-                fontSize: 14,
-                marginBottom: 20,
-                color: "red",
-              }}
-            >
-              Image can no longer be loaded! Please request again in an hour!
-            </p>
-          )}
-          <BgList>
-            <Bg onClick={() => clickCnt("nature")}>Nature</Bg>
-            <Bg onClick={() => clickCnt("architecture-interiors")}>
-              Architecture & Interiors
-            </Bg>
-            <Bg onClick={() => clickCnt("fashion-beauty")}>Fashion & Beauty</Bg>
-            <Bg onClick={() => clickCnt("food-drink")}>Food & Drink</Bg>
-            <Bg onClick={() => clickCnt("film")}>Film</Bg>
-            <Bg onClick={() => clickCnt("people")}>People</Bg>
-            <Bg onClick={() => clickCnt("athletics")}>Athletics</Bg>
-            <Bg onClick={() => clickCnt("street-photograhy")}>
-              Street Photograhy
-            </Bg>
-          </BgList>
-          <Title>Toggle</Title>
-          <Toggles>
-            <Toggle>spotify</Toggle>
-            <Toggle>todo</Toggle>
-            <Toggle>weather</Toggle>
-            <Toggle>focus</Toggle>
-            <Toggle>timer</Toggle>
-            <Toggle>quotes</Toggle>
-          </Toggles>
+          <GenerList>
+            {generObj.map((item) => (
+              <Gener
+                onClick={() => setGener(() => item)}
+                style={
+                  gener?.id === item.id
+                    ? { fontWeight: 700 }
+                    : { fontWeight: 400 }
+                }
+                key={item.id}
+              >
+                {item.title}
+              </Gener>
+            ))}
+          </GenerList>
+          <Content> {gener?.body}</Content>
           <Arrow />
         </SettingList>
       )}
