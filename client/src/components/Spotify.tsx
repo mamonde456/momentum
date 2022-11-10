@@ -6,16 +6,22 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { trackState } from "atom";
 import SpotifySearch from "components/SpotifySearch";
 import styled from "styled-components";
-
-const Wrapper = styled.div``;
+import { AnimatePresence, motion } from "framer-motion";
 
 const Title = styled.p`
+  width: 110px;
   font-size: 22px;
   color: white;
   margin-bottom: 30px;
+  cursor: pointer;
 `;
 
-const PlayBox = styled.div`
+const Wrapper = styled.div`
+  position: relative;
+  z-index: 2;
+`;
+
+const PlayBox = styled(motion.div)`
   width: 400px;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -32,12 +38,28 @@ const TabBtn = styled.div`
   border-radius: 10px;
 `;
 
-const PlayList = styled.div`
+const PlayList = styled(motion.div)`
+  padding: 10px;
+  max-height: 400px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
   overflow: scroll;
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+    background: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 10px;
+  }
 `;
 
 const Img = styled.div<{ bgPhoto: string }>`
@@ -47,10 +69,6 @@ const Img = styled.div<{ bgPhoto: string }>`
   background-size: cover;
   background-position: center;
 `;
-
-const p = styled.p``;
-
-const Description = styled.p``;
 
 const Search = styled.div`
   width: 100%;
@@ -77,6 +95,7 @@ const SearchBtn = styled.input`
   background-color: black;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
 `;
 
 interface IProps {
@@ -173,50 +192,63 @@ const Spotify = ({ code }: IProps) => {
     e.currentTarget.reset();
   };
   return (
-    <Wrapper>
+    <>
       <Title onClick={() => setIsClick((prev) => !prev)}>My playlist</Title>
-      <PlayBox style={isClick ? { display: "block" } : { display: "none" }}>
-        <div style={{ display: "flex", gap: 10, marginBottom: 30 }}>
-          <TabBtn onClick={() => setTab(false)}>Playlist</TabBtn>
-          <TabBtn onClick={() => setTab(true)}>search</TabBtn>
-        </div>
-        {tab ? (
-          <div>
-            <Search>
-              <form onSubmit={(e) => onSubmit(e)}>
-                <SearchInput
-                  type="search"
-                  name="search"
-                  // value={search}
-                  // onChange={(e) => setSearch(e.target.value)}
-                  placeholder="search song"
-                />
-                <SearchBtn type="submit" value="search" />
-              </form>
-            </Search>
-            <SpotifySearch data={searchResult} />
-          </div>
-        ) : (
-          <PlayList>
-            {playListResult?.items.map((item) => (
-              <div
-                onClick={() => setTrack({ uri: item.uri })}
-                style={{ cursor: "pointer" }}
+      <Wrapper style={isClick ? { zIndex: 2 } : { zIndex: -1 }}>
+        <AnimatePresence>
+          <PlayBox
+            initial={{ x: 10, opacity: 0 }}
+            animate={isClick ? { x: 0, opacity: 1 } : { x: 10, opacity: 0 }}
+          >
+            <div style={{ display: "flex", gap: 10, marginBottom: 30 }}>
+              <TabBtn onClick={() => setTab(false)}>Playlist</TabBtn>
+              <TabBtn onClick={() => setTab(true)}>search</TabBtn>
+            </div>
+            {tab ? (
+              <motion.div
+                initial={{ x: 10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 10, opacity: 0 }}
               >
-                <Img
-                  key={item.images[0].url}
-                  bgPhoto={item.images[0].url}
-                ></Img>
-                <p key={item.name}>{item.name}</p>
-                <p key={item.description}>{item.description}</p>
-              </div>
-            ))}
-          </PlayList>
-        )}
+                <Search>
+                  <form onSubmit={(e) => onSubmit(e)}>
+                    <SearchInput
+                      type="search"
+                      name="search"
+                      placeholder="search song"
+                    />
+                    <SearchBtn type="submit" value="search" />
+                  </form>
+                </Search>
+                <SpotifySearch data={searchResult} />
+              </motion.div>
+            ) : (
+              <PlayList
+                initial={{ x: 10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 10, opacity: 0 }}
+              >
+                {playListResult?.items.map((item) => (
+                  <div
+                    onClick={() => setTrack({ uri: item.uri })}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Img
+                      key={item.images[0].url}
+                      bgPhoto={item.images[0].url}
+                    ></Img>
+                    <p key={item.name}>{item.name}</p>
+                    <p key={item.description}>{item.description}</p>
+                  </div>
+                ))}
+              </PlayList>
+            )}
 
-        <Player accessToken={accessToken} track={track.uri} />
-      </PlayBox>
-    </Wrapper>
+            <Player accessToken={accessToken} track={track.uri} />
+          </PlayBox>
+        </AnimatePresence>
+      </Wrapper>
+    </>
   );
 };
 

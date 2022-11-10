@@ -9,6 +9,10 @@ import FocusForm from "components/FocusForm";
 import Setting from "components/Setthing";
 import Spotify from "components/Spotify";
 import Login from "components/Login";
+import { AnimatePresence, motion } from "framer-motion";
+import MainText from "components/MainText";
+
+const code = new URLSearchParams(window.location.search).get("code") as string;
 
 const Wrapper = styled.div<{ bgPhoto: string }>`
   width: 100vw;
@@ -17,33 +21,22 @@ const Wrapper = styled.div<{ bgPhoto: string }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: black;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center;
 `;
 
-const MainBox = styled.div`
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  top: 50px;
-  color: white;
-`;
-
-const Title = styled.div`
-  padding: 10px;
-  font-size: 100px;
-  /* font-weight: 700; */
-`;
 const Quote = styled.div`
-  position: absolute;
-  bottom: 30px;
+  padding: 10px;
   font-size: 22px;
   font-weight: 700;
   color: white;
-  /* opacity: 0.5; */
+`;
+const SpotifyBtn = styled(motion.div)`
+  position: absolute;
+  top: 20px;
+  left: 20px;
 `;
 
 interface IData {
@@ -76,24 +69,16 @@ interface IQuotes {
   };
 }
 
-const code = new URLSearchParams(window.location.search).get("code") as string;
-
-const SpotifyBtn = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-`;
 const Home = () => {
   const [bg, setBg] = useState<IData>();
   const [resize, setResize] = useState<IwindowSize>();
   const [time, setTime] = useState<Date | undefined>();
   const [hello, setHello] = useState<string>("");
-  const titleRef = useRef<HTMLDivElement>(null);
   const bgValue = window.localStorage.getItem("bgPhoto");
 
   const { isLoading, data } = useQuery(
     ["background_image", bgValue],
-    () => backgroundImgFn(bgValue || "null"),
+    () => backgroundImgFn(bgValue || "nature"),
     {
       refetchOnWindowFocus: false,
       retry: 0,
@@ -116,28 +101,30 @@ const Home = () => {
   };
 
   useEffect(() => {
+    window.addEventListener("resize", resizeFn);
+
+    return () => window.removeEventListener("resize", resizeFn);
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
 
     const hour = String(time).slice(16, 18);
+    if (Number(hour) >= 17) {
+      return setHello("Good evening");
+    }
+    if (Number(hour) >= 12 && Number(hour) < 17) {
+      return setHello("Good afternoon");
+    }
     if (Number(hour) < 12) {
-      setHello("Good morning");
-    } else if (Number(hour) >= 15) {
-      setHello("Good evening");
-    } else if (Number(hour) >= 12) {
-      setHello("Good afternoon");
+      return setHello("Good morning");
     }
 
     return () => {
       clearInterval(timer);
     };
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", resizeFn);
-
-    return () => window.removeEventListener("resize", resizeFn);
   }, []);
 
   useEffect(() => {
@@ -147,55 +134,51 @@ const Home = () => {
 
   return (
     <Wrapper bgPhoto={bg?.urls.regular || ""}>
-      {JSON.parse(window.localStorage.getItem("Weather") || "true") && (
-        <Weather />
-      )}
       {JSON.parse(window.localStorage.getItem("Spotify") || "true") && (
-        <SpotifyBtn>{code ? <Spotify code={code} /> : <Login />}</SpotifyBtn>
-      )}
-      <MainBox>
-        {JSON.parse(window.localStorage.getItem("Clock") || "true") && (
-          <>
-            {time && (
-              <p
-                style={
-                  window.localStorage.getItem("name")
-                    ? { fontSize: 180 }
-                    : { display: "none" }
-                }
-              >
-                {String(time).slice(16, 21)}
-              </p>
-            )}
-          </>
-        )}
-        <Title
-          style={
-            window.localStorage.getItem("name")
-              ? { fontSize: 62 }
-              : { fontSize: 100 }
-          }
-          ref={titleRef}
+        <SpotifyBtn
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          {window.localStorage.getItem("name")
-            ? `${hello}, ${window.localStorage.getItem("name")}`
-            : "Hello, what's your name?"}
-        </Title>
-
-        {!window.localStorage.getItem("name") && (
-          <NameForm width={titleRef?.current?.offsetWidth} />
-        )}
-        {JSON.parse(window.localStorage.getItem("Focus") || "true") && (
-          <>{window.localStorage.getItem("name") && <FocusForm />}</>
-        )}
-      </MainBox>
-      {JSON.parse(window.localStorage.getItem("Todo") || "true") && (
-        <ToDoList />
+          {code ? <Spotify code={code} /> : <Login />}
+        </SpotifyBtn>
       )}
-      <Setting></Setting>
-      {JSON.parse(window.localStorage.getItem("Quotes") || "true") && (
-        <Quote>{quotes?.slip?.advice}</Quote>
-      )}
+      <MainText time={time} hello={hello} />
+      <ToDoList />
+      <Setting />
+      <AnimatePresence>
+        {JSON.parse(window.localStorage.getItem("Weather") || "true") && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Weather />
+          </motion.div>
+        )}
+        {JSON.parse(window.localStorage.getItem("Quotes") || "true") && (
+          <motion.div
+            key="quotesBox"
+            style={
+              window.innerWidth < 1200
+                ? { position: "absolute", bottom: 70, transition: "ease .5s" }
+                : { position: "absolute", bottom: 30 }
+            }
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {isQuote ? (
+              <Quote>is loading...</Quote>
+            ) : (
+              <Quote>{quotes?.slip?.advice}</Quote>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Wrapper>
   );
 };

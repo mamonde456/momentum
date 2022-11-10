@@ -1,3 +1,5 @@
+import { weatherApi } from "api";
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -32,6 +34,10 @@ const Icon = styled.div<{ bgIcon: string }>`
   background-position: center;
 `;
 
+const Nothing = styled.div`
+  color: white;
+`;
+
 interface ILocation {
   name: string;
   main: {
@@ -50,40 +56,43 @@ interface IWeather {
 
 const Weather = () => {
   const [weather, setWeather] = useState<ILocation>();
+  const [errMsg, setIsError] = useState<string | null>();
   const onSuccess = async ({ coords }: GeolocationPosition) => {
-    const lat = coords.latitude;
-    const lon = coords.longitude;
-    const endUrl = `${process.env.REACT_APP_WEATHER_API_URL}?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
-    const response = await fetch(endUrl);
-    const data = await response.json();
-
+    const data = await weatherApi(coords.latitude, coords.longitude);
     setWeather(data);
   };
 
   const error = (err: any) => {
     console.log(err);
+    setIsError("Sorry, I couldn't get the weather data.");
   };
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(onSuccess, error);
   }, []);
   return (
-    <>
-      <Wrapper>
-        <WeatherBox>
-          <Icon
-            bgIcon={
-              `http://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png` ||
-              ""
-            }
-          ></Icon>
-          {/* <p>{weather?.weather.map((item) => item.description)}</p> */}
-          <Temp>{weather?.main.temp} ℃</Temp>
-        </WeatherBox>
-        <p style={{ opacity: 0.8, color: "white", padding: 10 }}>
-          {weather?.name}
-        </p>
-      </Wrapper>
-    </>
+    <AnimatePresence>
+      {JSON.parse(window.localStorage.getItem("Weather") || "true") && (
+        <Wrapper>
+          {weather && (
+            <>
+              <WeatherBox>
+                <Icon
+                  bgIcon={
+                    `http://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png` ||
+                    ""
+                  }
+                ></Icon>
+                <Temp>{weather?.main.temp} ℃</Temp>
+              </WeatherBox>
+              <p style={{ opacity: 0.8, color: "white", padding: 10 }}>
+                {weather?.name}
+              </p>
+            </>
+          )}
+          {errMsg && <Nothing>{errMsg}</Nothing>}
+        </Wrapper>
+      )}
+    </AnimatePresence>
   );
 };
 

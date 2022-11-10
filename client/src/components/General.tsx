@@ -37,7 +37,7 @@ const General = () => {
       </TitleBox>
       <Toggles>
         {toggleMap?.map((item) => (
-          <ToggleItem title={item.title} id={item.id} />
+          <ToggleItem key={item.id} title={item.title} id={item.id} />
         ))}
       </Toggles>
     </>

@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 const Toggle = styled.li`
@@ -7,7 +9,9 @@ const Toggle = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  &:first-child {
+    border-top: solid 1px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const BtnBg = styled.div`
@@ -15,15 +19,17 @@ const BtnBg = styled.div`
   height: 35px;
   border-radius: 20px;
   position: relative;
+  transition: ease 0.5s;
 `;
 
-const Btn = styled.div`
+const Btn = styled(motion.div)`
   width: 20px;
   height: 20px;
   border-radius: 15px;
   position: absolute;
   top: 50%;
   margin-top: -10px;
+  background-color: white;
 `;
 
 interface IProps {
@@ -39,6 +45,7 @@ const ToggleItem = ({ id, title }: IProps) => {
   };
 
   useEffect(() => {
+    console.log(toggle);
     window.localStorage.setItem(title, `${toggle}`);
   }, [toggle]);
   return (
@@ -52,17 +59,27 @@ const ToggleItem = ({ id, title }: IProps) => {
               : { backgroundColor: "#bcbcbc" }
           }
         >
-          <Btn
-            style={
-              toggle
-                ? {
-                    right: 6,
-                    backgroundColor: "white",
-                    transform: "scale(1.2)",
-                  }
-                : { left: 5, backgroundColor: "#e2e2e2" }
-            }
-          ></Btn>
+          <AnimatePresence>
+            <Btn
+              style={
+                toggle
+                  ? { backgroundColor: "e2e2e2" }
+                  : { backgroundColor: "white" }
+              }
+              initial={{
+                right: 6,
+                scale: 1,
+              }}
+              animate={
+                toggle
+                  ? {
+                      right: 6,
+                      scale: 1.2,
+                    }
+                  : { left: 5 }
+              }
+            ></Btn>
+          </AnimatePresence>
         </BtnBg>
       </Toggle>
     </>

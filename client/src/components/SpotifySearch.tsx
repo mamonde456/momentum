@@ -5,14 +5,23 @@ import styled from "styled-components";
 const ResultBox = styled.div`
   width: 100%;
   height: 500px;
-  overflow: scroll;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  /* background: blue; */
-  /* display: grid; */
-  /* grid-template-columns: repeat(5, 1fr); */
-  /* gap: 10px; */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+    background: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 10px;
+  }
 `;
 
 const Title = styled.p`
