@@ -2,9 +2,10 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import SpotifyWebApi from "spotify-web-api-node";
+import path from "path";
 
 const app = express();
-const PORT = 5000;
+const PORT = 5000 || process.env.PORT;
 const CORSLIST = [process.env.REDIRECT_URI];
 
 const corsOptions = {
@@ -43,7 +44,6 @@ app.post("/api", async (req, res) => {
       });
     })
     .catch((err) => {
-      // console.log(err);
       return res.sendStatus(400);
     });
 });
@@ -73,6 +73,12 @@ app.post("/api/refresh", (req, res) => {
       return res.sendStatus(400);
     });
 });
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"))
+);
 
 app.listen(PORT, () =>
   console.log(`server listening to http://localhost:${PORT} 🚀`)
