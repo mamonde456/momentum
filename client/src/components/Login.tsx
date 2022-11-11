@@ -45,7 +45,9 @@ const Login = () => {
       "streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state playlist-read-collaborative user-read-currently-playing playlist-read-private playlist-modify-public playlist-modify-private",
     state,
   };
-  const params = new URLSearchParams(config || "").toString();
+  const params = `client_id=${config.client_id}&client_secret=${config.client_secret}&redirect_uri=https%3A%2F%2Fmomentum-clone-coding.herokuapp.com%2Fapi&response_type=code&scope=streaming+user-read-email+user-read-private+user-library-read+user-library-modify+user-read-playback-state+user-modify-playback-state+playlist-read-collaborative+user-read-currently-playing+playlist-read-private+playlist-modify-public+playlist-modify-private&state=EcCgEVpEKquGBhjJ`;
+
+  // const params = new URLSearchParams(config).toString();
   return (
     <SpotifyBtn href={`${apiUrl}${params}`}>
       <Icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
