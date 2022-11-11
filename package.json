@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": "16.15.1",
+    "npm": "8.11.0"
+  },
   "scripts": {
     "start": "node build/server.js",
     "build": "npm run build:server && npm run build:client",
     "build:server": "babel server.js -d build",
     "build:client": "cd client && npm run build",
     "dev": "nodemon --exec babel-node server.js",
+    "heroku-prebuild": "npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
