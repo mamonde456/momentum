@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "engines": {
-    "node": "16.15.1",
-    "npm": "8.11.0"
-  },
   "scripts": {
     "start": "node build/server.js",
     "build": "babel server.js -d build",
