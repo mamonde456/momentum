@@ -11,18 +11,15 @@ const useAuth = (code: string) => {
     //코드를 액세스 토큰으로 교환하면 state에 넣어줌.
     // async await 을 안해주면 그 동안 데이터가 없어서 에러가 발생함. axios를 사용하면 에러가 나서 fetch로 변경
     const getAccessToken = async () => {
-      const response = await fetch(
-        "https://momentum-clone-coding.herokuapp.com/api",
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            code,
-          }),
-        }
-      );
+      const response = await fetch(process.env.REACT_APP_SERVER_API_URL || "", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          code,
+        }),
+      });
       const data = await response.json();
       if (data.status !== 200) {
         // 에러 발생 시 home으로 return
@@ -42,7 +39,7 @@ const useAuth = (code: string) => {
     //인터벌로 계속 액세스 토큰 갱신 > 보안의 이유
     const interval = setInterval(async () => {
       const response = await fetch(
-        "https://momentum-clone-coding.herokuapp.com/api/refresh",
+        process.env.REACT_APP_SERVER_API_REFRESH_URL || "",
         {
           method: "post",
           headers: {
