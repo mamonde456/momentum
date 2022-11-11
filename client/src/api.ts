@@ -4,8 +4,9 @@ export const backgroundImgFn = async (query: string) => {
   //   query: query || "nature",
   //   count: "10",
   // };
-  const param =
-    "client_id=YDIkdn5nE19BVaUr1L9Cnh12iVuX0BBdA3TwzBCZT8w&query=nature&count=10";
+  const param = `client_id=YDIkdn5nE19BVaUr1L9Cnh12iVuX0BBdA3TwzBCZT8w&query=${
+    query || "nature"
+  }&count=10`;
 
   const response = await fetch(
     `https://api.unsplash.com/photos/random?${param}`
