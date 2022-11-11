@@ -35,17 +35,18 @@ const Login = () => {
 
   const apiUrl = process.env.REACT_APP_API_URL;
   let state = generateRandomString(16);
+  const redirect_uri = process.env.REACT_APP_SERVER_API_URL || "";
   const config = {
     client_id: process.env.REACT_APP_CLIENT_ID || "",
     client_secret: process.env.REACT_APP_CLIENT_SECRET || "",
-    redirect_uri: process.env.REACT_APP_SERVER_API_URL || "",
+
     response_type: "code",
     scope:
       "streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state playlist-read-collaborative user-read-currently-playing playlist-read-private playlist-modify-public playlist-modify-private",
     state,
   };
 
-  const params = new URLSearchParams(config).toString();
+  const params = new URLSearchParams(config).toString() + `&${redirect_uri}`;
   return (
     <SpotifyBtn href={`${apiUrl}${params}`}>
       <Icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
