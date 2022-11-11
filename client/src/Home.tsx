@@ -4,8 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import ToDoList from "components/ToDoList";
 import { backgroundImgFn, quotesFn } from "api";
-import NameForm from "components/NameForm";
-import FocusForm from "components/FocusForm";
 import Setting from "components/Setthing";
 import Spotify from "components/Spotify";
 import Login from "components/Login";

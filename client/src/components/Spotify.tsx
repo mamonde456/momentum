@@ -2,7 +2,7 @@ import useAuth from "useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import React, { useEffect, useState } from "react";
 import Player from "./Player";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { trackState } from "atom";
 import SpotifySearch from "components/SpotifySearch";
 import styled from "styled-components";
