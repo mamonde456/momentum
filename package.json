@@ -5,11 +5,11 @@
   "main": "index.js",
   "engines": {
     "node": "16.15.1",
-    "npm": "8.11.0"
+    "npm": "6.11.3"
   },
   "scripts": {
-    "client:build": "cd client && npm i && npm run build",
-    "server:build": "cd server && npm run build && ../",
+    "client:build": "cd client && npm ci --dev && npm install && npm run build",
+    "server:build": "cd server && npm ci --dev && npm run build && ../",
     "heroku-prebuild": "npm run client:build && npm run server:build && mv build ./client/build ./server/build",
     "start": "cd server && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
