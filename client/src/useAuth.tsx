@@ -40,7 +40,7 @@ const useAuth = (code: string) => {
     //인터벌로 계속 액세스 토큰 갱신 > 보안의 이유
     const interval = setInterval(async () => {
       const response = await fetch(
-        process.env.REACT_APP_SERVER_API_REFRESH_URL,
+        "https://momentum-clone-coding.herokuapp.com/api/refresh",
         {
           method: "post",
           headers: {
