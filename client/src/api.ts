@@ -1,7 +1,7 @@
 export const backgroundImgFn = async (query: string) => {
   const config = {
     client_id: "YDIkdn5nE19BVaUr1L9Cnh12iVuX0BBdA3TwzBCZT8w",
-    query,
+    query: query || "nature",
     count: "10",
   };
   const param = new URLSearchParams(config).toString();
