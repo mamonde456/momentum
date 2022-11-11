@@ -7,7 +7,7 @@
     "client:build": "cd client && npm install && npm run build",
     "server:build": "cd server && npm run build && ../",
     "heroku-prebuild": "npm run client:build && npm run server:build && mv build ./client/build ./server/build",
-    "start": "cd server && node build/server.js",
+    "start": "cd server && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
