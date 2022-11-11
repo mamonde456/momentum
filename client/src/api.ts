@@ -1,6 +1,6 @@
 export const backgroundImgFn = async (query: string) => {
   const config = {
-    client_id: "YDIkdn5nE19BVaUr1L9Cnh12iVuX0BBdA3TwzBCZT8w",
+    client_id: process.env.REACT_APP_BG_CLIENT_IDs,
     query,
     count: "10",
   };
