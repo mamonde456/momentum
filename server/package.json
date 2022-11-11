@@ -11,8 +11,6 @@
     "start": "node build/server.js",
     "build": "babel server.js -d build",
     "dev": "nodemon --exec babel-node server.js",
-    "heroku-prebuild": "cd c",
-    "heroku-postbuild": "cd client/ && npm install --only=dev && NODE_ENV=development npm install --no-shrinkwrap && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
