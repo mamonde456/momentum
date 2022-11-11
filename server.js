@@ -6,7 +6,11 @@ import path from "path";
 
 const app = express();
 const PORT = 5000 || process.env.PORT;
-const CORSLIST = [process.env.REDIRECT_URI];
+const CORSLIST = [
+  process.env.REDIRECT_URI,
+  process.env.REDIRECT_URI2,
+  process.env.REDIRECT_URI3,
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -74,10 +78,10 @@ app.post("/api/refresh", (req, res) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/client/build", "index.html"))
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
 );
 
 app.listen(PORT, () =>
