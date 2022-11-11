@@ -5,7 +5,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import path from "path";
 
 const app = express();
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const CORSLIST = [
   process.env.REDIRECT_URI,
   process.env.REDIRECT_URI2,
