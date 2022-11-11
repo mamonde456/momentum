@@ -45,7 +45,7 @@ const Login = () => {
       "streaming user-read-email user-read-private user-library-read user-library-modify user-read-playback-state user-modify-playback-state playlist-read-collaborative user-read-currently-playing playlist-read-private playlist-modify-public playlist-modify-private",
     state,
   };
-  const params = new URLSearchParams(config).toString();
+  const params = new URLSearchParams(config || "").toString();
   return (
     <SpotifyBtn href={`${apiUrl}${params}`}>
       <Icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
