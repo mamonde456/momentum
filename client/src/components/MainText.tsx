@@ -10,14 +10,12 @@ const Wrapper = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  top: 50px;
   color: white;
 `;
 
 const Title = styled(motion.div)`
   padding: 10px;
-  font-size: 100px;
+  font-size: 60px;
 `;
 interface IProps {
   time: Date | undefined;
@@ -36,10 +34,9 @@ const MainText = (props: IProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
-            style={{ fontSize: 180 }}
           >
             {props.time && window.localStorage.getItem("name") && (
-              <p style={{ fontSize: 180 }}>
+              <p style={{ fontSize: 170 }}>
                 {String(props.time).slice(16, 21)}
               </p>
             )}
@@ -50,8 +47,8 @@ const MainText = (props: IProps) => {
         transition={{ duration: 0.5 }}
         style={
           window.localStorage.getItem("name")
-            ? { fontSize: 62 }
-            : { fontSize: 100 }
+            ? { fontSize: 52 }
+            : { fontSize: 70 }
         }
         ref={titleRef}
       >

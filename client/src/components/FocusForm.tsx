@@ -26,11 +26,11 @@ const FocusTextBox = styled.div`
 
 const FocusText = styled.p`
   padding: 10px;
-  font-size: 42px;
+  font-size: 32px;
 `;
 const Icon = styled.svg`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   fill: white;
 `;
 
@@ -116,7 +116,7 @@ const FocusForm = () => {
                   <OptionBox>
                     <Icon
                       onClick={() => setClick((prev) => !prev)}
-                      style={{ width: 25, height: 25 }}
+                      style={{ width: 15, height: 15 }}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 128 512"
                     >

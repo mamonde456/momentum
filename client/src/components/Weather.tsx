@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 const WeatherBox = styled.div`
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
 `;
@@ -21,7 +21,7 @@ const WeatherBox = styled.div`
 const Temp = styled.p`
   padding: 10px;
   color: #303030;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
 `;
 
@@ -84,7 +84,14 @@ const Weather = () => {
                 ></Icon>
                 <Temp>{weather?.main.temp} ℃</Temp>
               </WeatherBox>
-              <p style={{ opacity: 0.8, color: "white", padding: 10 }}>
+              <p
+                style={{
+                  opacity: 0.8,
+                  color: "white",
+                  padding: 10,
+                  fontSize: 14,
+                }}
+              >
                 {weather?.name}
               </p>
             </>
