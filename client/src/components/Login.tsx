@@ -35,7 +35,7 @@ const Login = () => {
 
   const apiUrl = process.env.REACT_APP_API_URL;
   let state = generateRandomString(16);
-  const redirect_uri = process.env.REACT_APP_SERVER_API_URL || "";
+  const redirect_uri = process.env.REACT_APP_REDIRECT_URI || "";
   // const config = {
   //   client_id: process.env.REACT_APP_CLIENT_ID || "",
   //   client_secret: process.env.REACT_APP_CLIENT_SECRET || "",
