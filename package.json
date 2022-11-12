@@ -12,6 +12,8 @@
     "server:build": "cd server && npm ci --dev && npm run build && cd ../",
     "heroku-prebuild": "npm run client:build && npm run server:build",
     "start": "cd server && npm start",
+    "dev": "cd server && npm run dev && cd ../",
+    "assets": " cd client && npm run start && cd ../",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
