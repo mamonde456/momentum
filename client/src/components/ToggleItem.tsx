@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 const Toggle = styled.li`
-  padding: 10px;
+  padding: 10px 5px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
@@ -15,20 +15,20 @@ const Toggle = styled.li`
 `;
 
 const BtnBg = styled.div`
-  width: 60px;
-  height: 35px;
+  width: 40px;
+  height: 22px;
   border-radius: 20px;
   position: relative;
   transition: ease 0.5s;
 `;
 
 const Btn = styled(motion.div)`
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   border-radius: 15px;
   position: absolute;
   top: 50%;
-  margin-top: -10px;
+  margin-top: -7px;
   background-color: white;
 `;
 

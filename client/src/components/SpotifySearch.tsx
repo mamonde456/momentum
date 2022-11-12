@@ -26,7 +26,7 @@ const ResultBox = styled.div`
 
 const Title = styled.p`
   padding: 10px;
-  font-size: 26px;
+  font-size: 20px;
   margin-bottom: 30px;
 `;
 const Box = styled.div`
@@ -37,7 +37,6 @@ const Box = styled.div`
   margin-bottom: 10px;
   cursor: pointer;
   .title {
-    font-size: 18px;
     font-weight: 700;
   }
   .pop {

@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Title = styled.p`
   width: 110px;
-  font-size: 22px;
+  font-size: 18px;
   color: white;
   margin-bottom: 30px;
   cursor: pointer;

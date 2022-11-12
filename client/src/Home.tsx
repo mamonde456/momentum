@@ -27,14 +27,14 @@ const Wrapper = styled.div<{ bgPhoto: string }>`
 
 const Quote = styled.div`
   padding: 10px;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 16px;
   color: white;
 `;
 const SpotifyBtn = styled(motion.div)`
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 20px;
+  font-size: 14px;
 `;
 
 interface IData {

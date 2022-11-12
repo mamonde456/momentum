@@ -5,7 +5,7 @@ const TitleBox = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 36px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 10px;
 `;
@@ -17,12 +17,16 @@ const BgList = styled.ul`
   gap: 10px;
 `;
 const Bg = styled.li`
+  font-size: 14px;
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 5px;
   border-radius: 10px;
   text-align: center;
   border: solid 2px rgba(0, 0, 0, 0.3);
   background-color: rgba(155, 202, 188, 0.3);
+  &:hover {
+    background-color: rgba(155, 202, 188, 0.8);
+  }
 `;
 
 const Photos = () => {
@@ -53,7 +57,7 @@ const Photos = () => {
     <>
       <TitleBox>
         <Title>Photos</Title>
-        <p style={{ opacity: 0.8 }}>
+        <p style={{ opacity: 0.8, fontSize: 12 }}>
           Choose a new genre of background images. You can't change it more than
           three times.
         </p>

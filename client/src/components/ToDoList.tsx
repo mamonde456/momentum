@@ -10,23 +10,22 @@ const ToDoBox = styled(motion.div)`
   color: black;
   -webkit-text-stroke: none;
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   right: 20px;
   .container {
     padding: 5px 2px;
     background-color: white;
     border-radius: 10px;
     position: absolute;
-    bottom: 80px;
+    bottom: 60px;
     right: 0;
     z-index: 2;
   }
 `;
 
 const ClickToDo = styled.p`
-  width: 90px;
   padding: 10px;
-  font-size: 24px;
+  font-size: 18px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -36,9 +35,32 @@ const ClickToDo = styled.p`
 `;
 
 const ToDoListBox = styled(motion.div)`
-  width: 400px;
-  max-height: 600px;
+  width: 350px;
+  max-height: 500px;
   padding: 10px;
+
+  .list {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    z-index: 1;
+  }
+`;
+const Nothing = styled.p`
+  color: #44404f;
+  font-size: 16px;
+  opacity: 0.8;
+  padding: 50px 30px;
+  text-align: center;
+  /* margin-bottom: 50px; */
+`;
+
+const ToDoTextBox = styled.div`
+  padding: 10px 0px;
+  max-height: 400px;
+  position: relative;
+  bottom: 30px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 5px;
@@ -53,42 +75,26 @@ const ToDoListBox = styled(motion.div)`
     background: none;
     border-radius: 10px;
   }
-
-  .list {
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    z-index: 1;
-  }
-`;
-const Nothing = styled.p`
-  color: #44404f;
-  font-size: 18px;
-  opacity: 0.8;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 50px;
 `;
 
 const TitleBox = styled.div`
   position: relative;
-  height: 30px;
-  margin-bottom: 50px;
+  height: 20px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
 const Icon = styled.svg`
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   cursor: pointer;
 `;
 
 const Select = styled.ul`
   padding: 10px 0px;
-  width: 150px;
+  width: 100px;
   top: 50px;
   left: 10px;
 `;
@@ -111,13 +117,13 @@ const Menu = styled.li`
 const Arrow = styled.div`
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-top: 15px solid white;
-  border-right: 10px solid transparent;
+  border-left: 8px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid white;
+  border-right: 8px solid transparent;
   position: absolute;
-  bottom: -30px;
-  right: 40px;
+  bottom: -20px;
+  right: 20px;
 `;
 
 const ToDoList = () => {
@@ -169,12 +175,13 @@ const ToDoList = () => {
           {isShow && (
             <div className="container">
               <ToDoListBox
-                initial={{ bottom: 60, opacity: 0 }}
+                initial={{ bottom: 50, opacity: 0 }}
                 animate={
                   isShow
                     ? { bottom: 80, opacity: 1 }
-                    : { bottom: 60, opacity: 0 }
+                    : { bottom: 50, opacity: 0 }
                 }
+                transition={{ duration: 0.5 }}
               >
                 <div>
                   <TitleBox>
@@ -187,7 +194,7 @@ const ToDoList = () => {
                       }}
                       onClick={() => setClick((prev) => !prev)}
                     >
-                      <p style={{ fontSize: 24, fontWeight: 500 }}>
+                      <p style={{ fontSize: 18, fontWeight: 500 }}>
                         {category === 1 ? "Done" : "Today"}
                       </p>
                       <Icon
@@ -232,14 +239,16 @@ const ToDoList = () => {
                     <Menu onClick={() => menuClick("done")}>Done delete</Menu>
                   </MenuList>
                 </div>
-                {toDos?.length === 0 && (
-                  <Nothing>Add a todo to get started</Nothing>
-                )}
-                {toDos?.map((item) => (
-                  <ToDo key={item.id} {...item} />
-                ))}
-                <CreateToDo />
+                <ToDoTextBox>
+                  {toDos?.length === 0 && (
+                    <Nothing>Add a todo to get started</Nothing>
+                  )}
+                  {toDos?.map((item) => (
+                    <ToDo key={item.id} {...item} />
+                  ))}
+                </ToDoTextBox>
                 <Arrow />
+                <CreateToDo />
               </ToDoListBox>
             </div>
           )}

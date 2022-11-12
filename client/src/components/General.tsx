@@ -7,7 +7,7 @@ const TitleBox = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 36px;
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 10px;
 `;
@@ -33,7 +33,7 @@ const General = () => {
     <>
       <TitleBox>
         <Title>General</Title>
-        <p style={{ opacity: 0.8 }}>Customize your dashboard</p>
+        <p style={{ opacity: 0.8, fontSize: 12 }}>Customize your dashboard</p>
       </TitleBox>
       <Toggles>
         {toggleMap?.map((item) => (

@@ -1,11 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { transform } from "typescript";
 import General from "./General";
 import Photos from "./Photos";
-import ToggleItem from "./ToggleItem";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -14,18 +11,15 @@ const Wrapper = styled.div`
 `;
 
 const Settingicon = styled.svg`
-  width: 25px;
-  height: 25px;
-  /* position: absolute;
-  bottom: 10px;
-  left: 15px; */
+  width: 20px;
+  height: 20px;
   fill: white;
   opacity: 0.8;
 `;
 
 const SettingBox = styled(motion.div)`
-  width: 700px;
-  height: 620px;
+  width: 500px;
+  height: 420px;
   position: absolute;
   bottom: 40px;
   left: -10px;
@@ -34,7 +28,7 @@ const SettingBox = styled(motion.div)`
 
 const SettingList = styled.div`
   width: 100%;
-  height: 600px;
+  height: 400px;
   position: relative;
   background-color: white;
   border-radius: 10px;
@@ -45,7 +39,7 @@ const SettingList = styled.div`
 `;
 
 const GenerList = styled.div`
-  width: 200px;
+  width: 130px;
   height: 100%;
   border-right: solid 1px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -56,7 +50,7 @@ const GenerList = styled.div`
 `;
 
 const Gener = styled.div`
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 const Content = styled.div`
@@ -109,7 +103,7 @@ const Setting = () => {
           style={
             window.innerWidth <= 720
               ? { width: window.innerWidth - 100 }
-              : { width: 700 }
+              : { width: 500 }
           }
           initial={{ bottom: 30, opacity: 0 }}
           animate={

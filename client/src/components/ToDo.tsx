@@ -8,10 +8,13 @@ const ToDoBox = styled.div`
   justify-content: space-between;
 `;
 
-const BtnBox = styled.div``;
 const Text = styled.div`
-  width: 230px;
+  max-width: 220px;
+  font-size: 14px;
   word-break: break-all;
+`;
+const Btn = styled.button`
+  font-size: 12px;
 `;
 
 const ToDo = ({ text, id, category }: IToDo) => {
@@ -41,41 +44,41 @@ const ToDo = ({ text, id, category }: IToDo) => {
           <Text>{text}</Text>
 
           {category === Categories.TO_DO && (
-            <BtnBox>
-              <button
+            <div>
+              <Btn
                 name={Categories.DONE + ""}
                 onClick={() => onClick(Categories.DONE)}
               >
                 Done
-              </button>
-              <button
+              </Btn>
+              <Btn
                 name={Categories.DELETE + ""}
                 onClick={() => onClick(Categories.DELETE)}
               >
                 Delete
-              </button>
-            </BtnBox>
+              </Btn>
+            </div>
           )}
         </>
       ) : (
         <>
           <Text style={{ textDecoration: "line-through" }}>{text}</Text>
-          <BtnBox>
+          <div>
             {selectorCategory === Categories.DONE && (
-              <button
+              <Btn
                 name={Categories.TO_DO + ""}
                 onClick={() => onClick(Categories.TO_DO)}
               >
                 To Do
-              </button>
+              </Btn>
             )}
-            <button
+            <Btn
               name={Categories.DELETE + ""}
               onClick={() => onClick(Categories.DELETE)}
             >
               Delete
-            </button>
-          </BtnBox>
+            </Btn>
+          </div>
         </>
       )}
     </ToDoBox>
