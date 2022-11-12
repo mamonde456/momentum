@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const ResultBox = styled.div`
   width: 100%;
-  height: 500px;
+  height: 380px;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@ const ResultBox = styled.div`
 
 const Title = styled.p`
   padding: 10px;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 30px;
 `;
 const Box = styled.div`

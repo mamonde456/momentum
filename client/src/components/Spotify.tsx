@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const PlayBox = styled(motion.div)`
-  width: 400px;
+  width: 350px;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
@@ -40,7 +40,7 @@ const TabBtn = styled.div`
 
 const PlayList = styled(motion.div)`
   padding: 10px;
-  max-height: 400px;
+  max-height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,11 +79,11 @@ const Search = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 280px;
+  width: 250px;
   background: none;
   border: none;
   border-bottom: solid 1px rgba(0, 0, 0, 0.5);
-  padding: 10px;
+  padding: 5px;
   margin-right: 10px;
   &:focus {
     outline: none;
@@ -91,7 +91,8 @@ const SearchInput = styled.input`
 `;
 
 const SearchBtn = styled.input`
-  padding: 10px;
+  padding: 5px;
+  font-size: 12px;
   background-color: black;
   border-radius: 5px;
   color: white;

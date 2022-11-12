@@ -36,6 +36,7 @@ const Icon = styled.div<{ bgIcon: string }>`
 
 const Nothing = styled.div`
   color: white;
+  font-size: 14px;
 `;
 
 interface ILocation {
