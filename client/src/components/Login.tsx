@@ -46,7 +46,7 @@ const Login = () => {
   //   state,
   // };
   // const params = new URLSearchParams(config).toString();
-  const params = `client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=streaming+user-read-email+user-read-private+user-library-read+user-library-modify+user-read-playback-state+user-modify-playback-state+playlist-read-collaborative+user-read-currently-playing+playlist-read-private+playlist-modify-public+playlist-modify-private&state=oHQXzJGMzSZKzjnN`;
+  const params = `client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&redirect_uri=${redirect_uri}&response_type=code&scope=streaming+user-read-email+user-read-private+user-library-read+user-library-modify+user-read-playback-state+user-modify-playback-state+playlist-read-collaborative+user-read-currently-playing+playlist-read-private+playlist-modify-public+playlist-modify-private&state=${state}`;
 
   return (
     <SpotifyBtn href={`${apiUrl}${params}`}>
