@@ -143,7 +143,7 @@ const Spotify = ({ code }: IProps) => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
     // console.log(accessToken);
-    const userProfile = async () => {
+    const userplaylists = async () => {
       const response = await fetch("https://api.spotify.com/v1/me/playlists", {
         method: "get",
         headers: {
@@ -155,7 +155,7 @@ const Spotify = ({ code }: IProps) => {
       const data = await response.json();
       setPlayListResult(data);
     };
-    userProfile();
+    userplaylists();
   }, [accessToken]);
 
   useEffect(() => {

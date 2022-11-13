@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.post("/api", async (req, res) => {
+app.post("/api", (req, res) => {
   const {
     body: { code },
   } = req;
