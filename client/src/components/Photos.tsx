@@ -30,12 +30,13 @@ const Bg = styled.li`
 `;
 
 const Photos = () => {
-  const [bgPhoto, setBgPhoto] = useState<string | undefined>("");
+  const [bgPhoto, setBgPhoto] = useState<string>(
+    window.localStorage.getItem("bgPhoto") || "nature"
+  );
   const [count, setCount] = useState(0);
   const clickCnt = (text: string) => {
     setBgPhoto(text);
     setCount(count + 1);
-    console.log(count);
   };
 
   useEffect(() => {
