@@ -1,5 +1,7 @@
+import { settingState } from "atom";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import General from "./General";
 import Photos from "./Photos";
@@ -82,7 +84,7 @@ const Setting = () => {
     { id: 0, title: "General", body: <General /> },
     { id: 1, title: "Photos", body: <Photos /> },
   ];
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useRecoilState(settingState);
   const [gener, setGener] = useState<IGener>(generObj[0]);
   return (
     <Wrapper>

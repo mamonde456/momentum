@@ -9,6 +9,8 @@ import Spotify from "components/Spotify";
 import Login from "components/Login";
 import { AnimatePresence, motion } from "framer-motion";
 import MainText from "components/MainText";
+import { useSetRecoilState } from "recoil";
+import { settingState } from "atom";
 
 const code = new URLSearchParams(window.location.search).get("code") as string;
 
@@ -20,7 +22,13 @@ const Wrapper = styled.div<{ bgPhoto: string }>`
   align-items: center;
   justify-content: center;
   background-color: black;
-  background-image: url(${(props) => props.bgPhoto});
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      10%,
+      rgba(0, 0, 0, 0)
+    ),
+    url(${(props) => props.bgPhoto});
   background-size: cover;
   background-position: center;
 `;
@@ -73,6 +81,7 @@ const Home = () => {
   const [time, setTime] = useState<Date | undefined>();
   const [hello, setHello] = useState<string>("");
   const bgValue = window.localStorage.getItem("bgPhoto");
+  const setSetting = useSetRecoilState(settingState);
 
   const { isLoading, data } = useQuery(
     ["background_image", bgValue],
@@ -132,6 +141,14 @@ const Home = () => {
 
   return (
     <Wrapper bgPhoto={bg?.urls.regular || ""}>
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "absolute",
+        }}
+        onClick={() => setSetting(false)}
+      ></div>
       {JSON.parse(window.localStorage.getItem("Spotify") || "true") && (
         <SpotifyBtn
           initial={{ opacity: 0 }}
