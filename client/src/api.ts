@@ -1,7 +1,7 @@
 export const backgroundImgFn = async (query: string) => {
   const config = {
     client_id: process.env.REACT_APP_BG_CLIENT_ID || "",
-    query: query || "nature",
+    query,
     count: "10",
   };
   const params = new URLSearchParams(config).toString();
