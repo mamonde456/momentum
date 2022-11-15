@@ -5,6 +5,7 @@ import FocusForm from "./FocusForm";
 import NameForm from "./NameForm";
 
 const Wrapper = styled(motion.div)`
+  position: absolute;
   padding: 10px;
   display: flex;
   flex-direction: column;

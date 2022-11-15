@@ -13,14 +13,13 @@ const Wrapper = styled.div`
 `;
 const WeatherBox = styled.div`
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  color: white;
   display: flex;
   align-items: center;
 `;
 
 const Temp = styled.p`
   padding: 10px;
-  color: #303030;
   font-size: 18px;
   font-weight: 700;
 `;
