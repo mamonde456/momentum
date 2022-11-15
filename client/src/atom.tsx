@@ -53,3 +53,8 @@ export const trackState = atom<ITrack>({
   key: "track",
   default: { uri: "" },
 });
+
+export const settingState = atom({
+  key: "setting",
+  default: false,
+});
