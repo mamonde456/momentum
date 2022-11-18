@@ -16,7 +16,10 @@ spotify-web-api-node<br>
 
 ### front-end
 
+react<br>
 typescript<br>
+styled-components<br>
+framer-motion<br>
 recoil<br>
 react-query<br>
 react-router-dom<br>
