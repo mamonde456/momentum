@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 const SpotifyBtn = styled.a`
@@ -20,7 +20,7 @@ const Icon = styled.svg`
 `;
 
 const Login = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
   const generateRandomString = (num: number) => {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

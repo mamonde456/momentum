@@ -1,5 +1,5 @@
 import Weather from "components/Weather";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import ToDoList from "components/ToDoList";

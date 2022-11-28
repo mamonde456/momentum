@@ -1,7 +1,5 @@
-import Login from "components/Login";
 import React from "react";
-import Spotify from "components/Spotify";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
 
 const GlobalStyle = createGlobalStyle`

@@ -1,7 +1,6 @@
 import { categoryState, toDoState } from "atom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import ToDo from "./ToDo";
 
 const Input = styled.input`
   width: 100%;

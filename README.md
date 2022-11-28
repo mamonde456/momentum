@@ -2,7 +2,11 @@
 
 리액트를 사용하여 크롬 모멘텀 만들어보기.
 <br>
-website: https://momentum-clone-coding.herokuapp.com
+website: ~https://momentum-clone-coding.herokuapp.com~
+
+website: https://gcvzafduxy.us16.qoddiapp.com
+=> heroku 무료 티어 종료로 수정 중
+
 <br>
 
 ## Using
