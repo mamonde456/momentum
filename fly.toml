@@ -7,7 +7,6 @@ processes = []
 
 [build]
   dockerfile = "Dockerfile"
-# image = "nginx"
 
 [env]
   PORT = "3001"
