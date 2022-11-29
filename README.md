@@ -4,8 +4,8 @@
 <br>
 website: ~https://momentum-clone-coding.herokuapp.com~
 
-website: momentum-clone-coding.fly.dev
-=> heroku 무료 티어 종료로 수정
+website: momentum-clone-coding.fly.dev/ 
+<br> => heroku 무료 티어 종료로 수정
 
 <br>
 
