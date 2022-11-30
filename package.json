@@ -8,9 +8,9 @@
     "npm": "8.11.0"
   },
   "scripts": {
-    "client:build": "cd client && npm ci && npm run build && cd ../",
+    "client:build": "cd client && npm ci --dev && npm run build && cd ../",
     "server:build": "cd server && npm ci --dev && npm run build && cd ../",
-    "prebuild": "npm run client:build && npm run server:build",
+    "prebuild": "npm run server:build",
     "start": "npm run prebuild && cd server && npm start",
     "dev": "cd server && npm run dev && cd ../",
     "assets": " cd client && npm run start && cd ../",
