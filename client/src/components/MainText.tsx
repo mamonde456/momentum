@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import FocusForm from "./FocusForm";
 import NameForm from "./NameForm";

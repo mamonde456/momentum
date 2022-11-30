@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 const Toggle = styled.li`

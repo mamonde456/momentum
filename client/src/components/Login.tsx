@@ -35,7 +35,6 @@ const Login = () => {
 
   const apiUrl = process.env.REACT_APP_API_URL;
   let state = generateRandomString(16);
-  const redirect_uri = process.env.REACT_APP_REDIRECT_URI || "";
   /*
   const config = {
     client_id: process.env.REACT_APP_CLIENT_ID || "",
@@ -48,7 +47,7 @@ const Login = () => {
   };
   const params = new URLSearchParams(config).toString();
   */
-  const params = `client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&redirect_uri=${redirect_uri}&response_type=code&scope=streaming+user-read-email+user-read-private+user-library-read+user-library-modify+user-read-playback-state+user-modify-playback-state+playlist-read-collaborative+user-read-currently-playing+playlist-read-private+playlist-modify-public+playlist-modify-private&state=${state}`;
+  const params = `client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code&scope=streaming+user-read-email+user-read-private+user-library-read+user-library-modify+user-read-playback-state+user-modify-playback-state+playlist-read-collaborative+user-read-currently-playing+playlist-read-private+playlist-modify-public+playlist-modify-private&state=${state}`;
 
   return (
     <SpotifyBtn href={`${apiUrl}${params}`}>

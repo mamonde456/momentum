@@ -1,5 +1,5 @@
 import { ITrack, trackState } from "atom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 const ResultBox = styled.div`

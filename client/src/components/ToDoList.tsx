@@ -2,7 +2,7 @@ import { Categories, categoryState, setToDos, toDoState } from "atom";
 import CreateToDo from "components/CreateToDo";
 import ToDo from "components/ToDo";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
