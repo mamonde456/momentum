@@ -8,12 +8,12 @@
     "npm": "8.11.0"
   },
   "scripts": {
-    "client:build": "cd client && npm i && npm run build && cd ../",
-    "server:build": "cd server && npm ci --dev && npm run build && cd ../",
-    "prebuild": "server:build && client:build",
+    "client": "cd client && npm i && npm run build && cd ../",
+    "server": "cd server && npm ci --dev && npm run build && cd ../",
+    "prebuild": "server && client",
     "start": "npm run prebuild && cd server && npm start && ../client && npm run build",
-    "dev": "cd server && npm run dev && cd ../",
-    "assets": " cd client && npm run start && cd ../",
+    "dev:server": "cd server && npm run dev && cd ../",
+    "dev:assets": " cd client && npm run start && cd ../",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
