@@ -10,7 +10,7 @@
   "scripts": {
     "client:build": "cd client && npm ci --dev && npm run build && cd ../",
     "server:build": "cd server && npm ci --dev && npm run build && cd ../",
-    "prebuild": "client:build && server:build",
+    "prebuild": "cd client && npm ci --dev && npm run build && cd ../ && cd server && npm ci --dev && npm run build && cd ../",
     "start": "npm run prebuild && cd server && npm start && ../client && npm run build",
     "dev": "cd server && npm run dev && cd ../",
     "assets": " cd client && npm run start && cd ../",
