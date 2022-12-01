@@ -10,6 +10,7 @@ const CORSLIST = [
   process.env.REDIRECT_URI,
   process.env.REDIRECT_URI2,
   process.env.REDIRECT_URI3,
+  process.env.REDIRECT_URI4,
 ];
 
 const corsOptions = {
