@@ -233,12 +233,13 @@ const Spotify = ({ code }: IProps) => {
                   <div
                     onClick={() => setTrack({ uri: item.uri })}
                     style={{ cursor: "pointer" }}
+                    key={item.name}
                   >
                     <Img
                       key={item.images[0].url}
                       bgPhoto={item.images[0].url}
                     ></Img>
-                    <p key={item.name}>{item.name}</p>
+                    <p>{item.name}</p>
                     <p key={item.description}>{item.description}</p>
                   </div>
                 ))}
