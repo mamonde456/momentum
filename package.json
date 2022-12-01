@@ -11,7 +11,7 @@
     "prebuild": "build:server && build:client",
     "build:client": "cd client && npm i && npm run build && cd ../",
     "build:server": "cd server && npm ci --dev && npm run build && cd ../",
-    "start": "npm run prebuild && cd server && npm start && ../client && npm run build",
+    "start": "cd server && npm ci --dev && npm run build && npm start && ../client && npm i && npm run build",
     "dev:server": "cd server && npm run dev && cd ../",
     "dev:assets": " cd client && npm run start && cd ../",
     "test": "echo \"Error: no test specified\" && exit 1"
