@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const useAuth = (code: string) => {
   const [accessToken, setAccessToken] = useState<string>("");
   const [refreshToken, setRefreshToken] = useState<string>("");
   const [expiresIn, setExpiresIn] = useState<number>(0);
-  const navigator = useNavigate();
 
   useEffect(() => {
-    console.log(code);
     const getAccessToken = async () => {
       const response = await fetch(process.env.REACT_APP_SERVER_API_URL || "", {
         method: "post",
