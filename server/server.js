@@ -33,7 +33,7 @@ app.post("/api", (req, res) => {
   } = req;
 
   const spotifyApi = new SpotifyWebApi({
-    redirectUri: "http://localhost:3000",
+    redirectUri: process.env.REDIRECT_URI4,
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
   });
