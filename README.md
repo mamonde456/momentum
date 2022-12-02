@@ -4,7 +4,7 @@
 <br>
 website: ~https://momentum-clone-coding.herokuapp.com~
 
-website: https://momentum-clone-coding.fly.dev/ 
+website: https://tomentum-clone-coding.netlify.app
 <br> => heroku 무료 티어 종료로 수정
 
 <br>
