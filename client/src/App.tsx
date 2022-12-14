@@ -1,6 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
+import { Helmet } from "react-helmet";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -67,6 +68,9 @@ a {
 function App() {
   return (
     <>
+      <Helmet>
+        <title>momentum</title>
+      </Helmet>
       <GlobalStyle></GlobalStyle>
       <Router />
     </>
