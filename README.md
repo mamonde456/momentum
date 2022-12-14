@@ -11,13 +11,6 @@ website: https://tomentum-clone-coding.netlify.app
 
 ## Using
 
-### back-end
-
-express<br>
-babel<br>
-nodemon<br>
-spotify-web-api-node<br>
-
 ### front-end
 
 react<br>
@@ -29,6 +22,13 @@ react-query<br>
 react-router-dom<br>
 spotify-web-api-node<br>
 react-spotify-web-playback<br>
+
+### back-end
+
+express<br>
+babel<br>
+nodemon<br>
+spotify-web-api-node<br>
 
 ### 구현 내용
 
